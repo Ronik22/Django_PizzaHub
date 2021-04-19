@@ -55,151 +55,52 @@
         </div>
 
         <ul class="breadcrumb">
-            <li><a href="#sec-pizza">Pizzas</a></li>
-            <li><a href="#sec-burgers">Burgers</a></li>
-            <li><a href="#sec-beverages">Beverages</a></li>
-            <li><a href="#sec-salads">Salads</a></li>
+            {% for category in categories %}
+                <li><a href="#sec-{{category.title}}">{{category.title}}</a></li>
+                <!-- <li><a href="#sec-burgers">Burgers</a></li>
+                <li><a href="#sec-beverages">Beverages</a></li>
+                <li><a href="#sec-salads">Salads</a></li> -->
+            {% endfor %}
         </ul>
 
         <!-- SECOND PART -->
 
-        <div id="sec-pizza"></div>
-        <div class="p1-headingWrap">
-            <h2 class="p1-heading">Pizzas</h2>
-            <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit.</p>
-        </div>
-        <div class="second-part">
-
-            {% for product in products %}
-            <div class="card">
-                <img src="{% static 'ecom/images/karthik-garikapati-oBbTc1VoT-0-unsplash.jpg' %}" alt="Avatar" style="width:100%">
-                <div class="middle">
-                    <div class="text"><i class="fas fa-cart-plus"></i></div>
-                </div>
-                <div class="container">
-                    <h4><b>{{product.item}}</b></h4> 
-                    <p style="opacity: 0.5; margin-bottom: 24px;">{{product.description}}</p>
-                    <p>
-                        <i class="far fa-heart nf-heart"></i>
-                    </p>
-                    <p>
-                        <span class="fas fa-star f-star"></span>
-                        <span class="fas fa-star f-star"></span>
-                        <span class="fas fa-star f-star"></span>
-                        <span class="far fa-star nf-star"></span>
-                        <span class="far fa-star nf-star"></span>
-                    </p>
-                    <p class="c-subtext">₹ {{product.price}}/-</p> 
-                </div>
+        {% for category in categories %}
+            <div id="sec-{{category.title}}"></div>
+            <div class="p1-headingWrap">
+                <h2 class="p1-heading">{{category.title}}</h2>
+                <p>{{category.description}}</p>
             </div>
+            
+            <div class="second-part">
+            {% for product in category.get_products %}
+                <div class="card">
+                    <img src="{% static 'ecom/images/karthik-garikapati-oBbTc1VoT-0-unsplash.jpg' %}" alt="Avatar" style="width:100%">
+                    <div class="middle">
+                        <div class="text"><i class="fas fa-cart-plus"></i></div>
+                    </div>
+                    <div class="container">
+                        <h4><b>{{product.item}}</b></h4> 
+                        <p style="opacity: 0.5; margin-bottom: 24px;">{{product.description}}</p>
+                        <p>
+                            <i class="far fa-heart nf-heart"></i>
+                        </p>
+                        <p>
+                            {% for i in product.rating %}
+                                {% if i == '1' %}
+                                    <span class="fas fa-star f-star"></span>
+                                {% else %}
+                                    <span class="far fa-star nf-star"></span>
+                                {% endif %}
+                            {% endfor %}
+                        </p>
+                        <p class="c-subtext">₹ {{product.price}}/-</p> 
+                    </div>
+                </div>
             {% endfor %}
 
-        </div>
-
-        <!-- THIRD PART -->
-
-        <div id="sec-burgers"></div>
-        <div class="p1-headingWrap">
-            <h2 class="p1-heading">Burgers</h2>
-            <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit.</p>
-        </div>
-        <div class="second-part">
-
-            {% for product in products %}
-            <div class="card">
-                <img src="{% static 'ecom/images/karthik-garikapati-oBbTc1VoT-0-unsplash.jpg' %}" alt="Avatar" style="width:100%">
-                <div class="middle">
-                    <div class="text"><i class="fas fa-cart-plus"></i></div>
-                </div>
-                <div class="container">
-                    <h4><b>{{product.item}}</b></h4> 
-                    <p style="opacity: 0.5; margin-bottom: 24px;">{{product.description}}</p>
-                    <p>
-                        <i class="far fa-heart nf-heart"></i>
-                    </p>
-                    <p>
-                        <span class="fas fa-star f-star"></span>
-                        <span class="fas fa-star f-star"></span>
-                        <span class="fas fa-star f-star"></span>
-                        <span class="far fa-star nf-star"></span>
-                        <span class="far fa-star nf-star"></span>
-                    </p>
-                    <p class="c-subtext">₹ {{product.price}}/-</p> 
-                </div>
             </div>
-            {% endfor %}
-
-        </div>
-
-        <!-- FOURTH PART -->
-
-        <div id="sec-beverages"></div>
-        <div class="p1-headingWrap">
-            <h2 class="p1-heading">Beverages</h2>
-            <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit.</p>
-        </div>
-        <div class="second-part">
-
-            {% for product in products %}
-            <div class="card">
-                <img src="{% static 'ecom/images/karthik-garikapati-oBbTc1VoT-0-unsplash.jpg' %}" alt="Avatar" style="width:100%">
-                <div class="middle">
-                    <div class="text"><i class="fas fa-cart-plus"></i></div>
-                </div>
-                <div class="container">
-                    <h4><b>{{product.item}}</b></h4> 
-                    <p style="opacity: 0.5; margin-bottom: 24px;">{{product.description}}</p>
-                    <p>
-                        <i class="far fa-heart nf-heart"></i>
-                    </p>
-                    <p>
-                        <span class="fas fa-star f-star"></span>
-                        <span class="fas fa-star f-star"></span>
-                        <span class="fas fa-star f-star"></span>
-                        <span class="far fa-star nf-star"></span>
-                        <span class="far fa-star nf-star"></span>
-                    </p>
-                    <p class="c-subtext">₹ {{product.price}}/-</p> 
-                </div>
-            </div>
-            {% endfor %}      
-            
-        </div>
-
-        <!-- FIFTH PART -->
-
-        <div id="sec-salads"></div>
-        <div class="p1-headingWrap">
-            <h2 class="p1-heading">Salads</h2>
-            <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit.</p>
-        </div>
-        <div class="second-part">
-
-            {% for product in products %}
-            <div class="card">
-                <img src="{% static 'ecom/images/karthik-garikapati-oBbTc1VoT-0-unsplash.jpg' %}" alt="Avatar" style="width:100%">
-                <div class="middle">
-                    <div class="text"><i class="fas fa-cart-plus"></i></div>
-                </div>
-                <div class="container">
-                    <h4><b>{{product.item}}</b></h4> 
-                    <p style="opacity: 0.5; margin-bottom: 24px;">{{product.description}}</p>
-                    <p>
-                        <i class="far fa-heart nf-heart"></i>
-                    </p>
-                    <p>
-                        <span class="fas fa-star f-star"></span>
-                        <span class="fas fa-star f-star"></span>
-                        <span class="fas fa-star f-star"></span>
-                        <span class="far fa-star nf-star"></span>
-                        <span class="far fa-star nf-star"></span>
-                    </p>
-                    <p class="c-subtext">₹ {{product.price}}/-</p> 
-                </div>
-            </div>
-            {% endfor %}       
-            
-        </div>
+        {% endfor %}
 
     </main>
 

@@ -1,5 +1,4 @@
 from django.db import models
-from django.db.models.fields import BLANK_CHOICE_DASH
 
 # Create your models here.
 
@@ -10,6 +9,7 @@ class Product(models.Model):
     discount = models.DecimalField(null=True, blank=True, max_digits=5, decimal_places=2)
     brand = models.CharField(max_length=100)
     description = models.TextField(max_length=300, null=True, blank=True)
+    rating = models.CharField(default="00000", max_length=5)
     category = models.ForeignKey('Category', on_delete=models.CASCADE) 
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
@@ -20,8 +20,16 @@ class Product(models.Model):
 
 class Category(models.Model):
     title = models.CharField(max_length=150)
+    description = models.CharField(max_length=250, blank=True)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
 
+    @property
+    def get_products(self):
+        return Product.objects.filter(category=self.id)
+
     def __str__(self):
         return f"{self.id}-{self.title}"
+
+    class Meta:
+        verbose_name = 'Categorie'

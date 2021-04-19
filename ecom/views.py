@@ -10,9 +10,12 @@ def home(request):
     }
     return render(request, 'ecom/home.html', context)
 
+
 def menu(request):
     products = Product.objects.all()
+    categories = Category.objects.all()
     context = {
-        "products": products
+        "products": products,
+        "categories": categories
     }
     return render(request, 'ecom/menu.html', context)
