@@ -764,3 +764,86 @@ ul.breadcrumb li a:hover {
   color: #01447e;
   text-decoration: underline;
 }
+
+
+
+/* CART */
+
+
+.shpcart table,
+.shpcart th,
+.shpcart td {
+  border-bottom: 1px solid grey;
+  border-collapse: collapse;
+}
+
+.shpcart table {
+  border: 1px solid grey;
+}
+
+.shpcart th,
+.shpcart td {
+  padding: 20px;
+  text-align: center;
+}
+
+.shpcart .thsplft {
+  text-align: left;
+}
+
+#shptable {
+  width: 100%;
+}
+
+.shpcart {
+  padding: 30px;
+  margin-top: 60px;
+  overflow-x: auto;
+}
+
+.shpimg img {
+  width: 200px;
+  height: 200px;
+}
+
+.shpimg {
+  display: flex;
+  align-items: center;
+}
+
+.shpimg div {
+  padding-left: 1.5rem;
+}
+
+.tdinp {
+  text-align: center;
+  height: 30px;
+}
+
+.shpcheckout {
+  margin: 2rem;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid grey;
+  line-height: 1.5em;
+}
+
+.shpcheckout button {
+  margin-top: 20px;
+  background-color: #FD0100;
+  border: 1px solid transparent;
+  width: 120px;
+  color: white;
+  padding: 10px 15px;
+  text-align: center;
+  font-size: 16px;
+  cursor: pointer;
+  transition: 0.3s ease-in-out;
+}
+
+.shpcheckout button:hover {
+  background-color: white;
+  color: #FD0100;
+  border: 1px solid #FD0100;
+}
