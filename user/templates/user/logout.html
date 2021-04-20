@@ -1,0 +1,19 @@
+{% extends "ecom/base.html" %}
+
+{% block title %}Pizza-Hub | Logout{% endblock %}
+
+{% block fbgnav %}
+    nav-fbg
+{% endblock %}
+
+{% block content %}
+
+<div class="container pt-5 mt-5">
+    <h2>You have been logged out</h2>    
+    <div class="border-top pt-3">
+        <small class="text-muted">
+            <a href="{% url 'login' %}">Login Again</a>
+        </small>
+    </div>
+</div>
+{% endblock %}

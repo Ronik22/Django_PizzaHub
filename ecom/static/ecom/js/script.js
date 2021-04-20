@@ -11,7 +11,7 @@ function closeNav() {
 
 // ON SCROLL TRIGGER NAV COLOR
 
-const navbar = document.querySelector('.navbar');
+const navbar = document.querySelector('.mynavbar');
 window.onscroll = () => {
     if (window.scrollY > 100) {
         navbar.classList.add('nav-active');

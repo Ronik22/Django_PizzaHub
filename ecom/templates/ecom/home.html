@@ -1,53 +1,12 @@
+{% extends "ecom/base.html" %}
 {% load static %}
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="keywords" content="pizza,food,order,pizzahub,party">
-    <meta name="author" content="Ronik Bhattacharjee">
-    <meta name="description" content="Pizza-Hub is a pizza ordering website">
-
-    <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous"> -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin="anonymous" />
-    <link rel="stylesheet" href="{% static 'ecom/css/style.css' %}">
-    <title>Pizza-Hub</title>
-</head>
-<body>
-
-    <!-- HEADER -->
-
-    <!-- NAVBAR -->
-    <nav class="navbar">
-        <div style="font-family: 'Pacifico', cursive;" class="nav-logo">Pizza-Hub</div>
-        <div class="searchtoggle">
-            <i class="fas fa-search"></i>
-        </div>
-        <div onclick="openNav()" class="toggle-side-nav">
-            <div class="ntlines"></div>
-            <div class="ntlines"></div>
-            <div class="ntlines"></div>
-        </div>
-    </nav>
-
-    <!-- SIDENAVBAR  -->
-    <div id="mySidenav" class="sidenav">
-        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-        <br><br><br>
-        <a href="./index.html">Home</a>
-        <a href="./menu.html">Menu</a>
-        <a href="#">Reservation</a>
-        <a href="#">Cart</a>
-        <a href="#">About</a>
-        <a href="#">Contact</a>
-    </div>
+{% block title %}
+    Pizza-Hub | Home
+{% endblock %}
 
 
-    <!-- MAIN BODY -->
-
-    <main>
+{% block content %}
 
         <!-- FIRST PART -->
 
@@ -88,11 +47,13 @@
                         <i class="far fa-heart nf-heart"></i>
                     </p>
                     <p>
-                        <span class="fas fa-star f-star"></span>
-                        <span class="fas fa-star f-star"></span>
-                        <span class="fas fa-star f-star"></span>
-                        <span class="far fa-star nf-star"></span>
-                        <span class="far fa-star nf-star"></span>
+                        {% for i in product.rating %}
+                            {% if i == '1' %}
+                                <span class="fas fa-star f-star"></span>
+                            {% else %}
+                                <span class="far fa-star nf-star"></span>
+                            {% endif %}
+                        {% endfor %}
                     </p>
                     <p class="c-subtext">₹ {{product.price}}/-</p> 
                 </div>
@@ -158,47 +119,4 @@
             </div>
         </div>
 
-    </main>
-
-
-    <!-- FOOTER -->
-    <footer>
-    <!-- Contact form -->
-        <div class="f-container">
-            <div class="cfttab1">
-                <div id="ftrabt">
-                    <span>About</span><br><br>
-                    Lorem, ipsum dolor sit amet consectetur adipisicing elit. Est vel quam numquam maxime pariatur minus libero reprehenderit veritatis iste dolores?
-                </div>
-                <br><br>
-                <div><i class="fas fa-map-marker-alt"></i> &nbsp&nbsp 379 Hudson St, New York, US</div><br>
-                <div><i class="fas fa-phone-alt"></i>&nbsp&nbsp +21-3315-856987</div><br>
-                <div><i class="fas fa-envelope"></i>&nbsp&nbsp pizzaHub@example.com</div>
-                <br><br>
-                <div id="ftrsocial">
-                    <i class="fab fa-facebook-f"></i>
-                    <i class="fab fa-twitter"></i>
-                    <i class="fab fa-instagram"></i>
-                    <i class="fab fa-linkedin-in"></i>
-                    <i class="fab fa-google-plus-g"></i>
-                </div>
-            </div>
-            <div class="cfttab2">
-                <span id="gitctf">Get in Touch</span>
-                <form action="/action_page.php">
-                    <input type="text" id="fname" name="firstname" placeholder="First Name">
-                    <input type="text" id="lname" name="lastname" placeholder="Last Name">
-                    <input type="text" id="email" name="email" placeholder="Email ID">
-                    <textarea id="subject" name="subject" placeholder="Write your message here.." style="height:200px"></textarea>
-                
-                    <input type="submit" value="Submit">
-                </form>
-            </div>
-        </div>
-    </footer>
-
-    <!-- SCRIPTS -->
-    <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js" integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf" crossorigin="anonymous"></script> -->
-    <script src="{% static 'ecom/js/script.js' %}"></script>
-</body>
-</html>
+{% endblock %}
