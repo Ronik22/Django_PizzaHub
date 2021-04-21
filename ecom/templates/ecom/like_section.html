@@ -1,0 +1,13 @@
+<form action="{% url 'product-like' %}" method="POST">
+    {% csrf_token %}
+
+    {% if user.is_authenticated %}
+        {% if product in already_liked %}
+            <a id="like" type="submit" name="product_id" value="{{product.id}}" ><i onclick="toggleLike(this)" class="fas fa-heart f-heart"></i></a>
+        {% else %}
+            <a id="like" type="submit" name="product_id" value="{{product.id}}" ><i onclick="toggleLike(this)" class="far fa-heart nf-heart"></i></a>
+        {% endif %}
+    {% else %}
+        <i class="far fa-heart nf-heart"></i>
+    {% endif %}
+</form>

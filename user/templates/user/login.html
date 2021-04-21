@@ -1,5 +1,6 @@
 {% extends "ecom/base.html" %}
 {% load crispy_forms_tags %}
+{% load static %}
 
 {% block title %}Pizza-Hub | Login{% endblock %}
 
@@ -8,26 +9,17 @@
 {% endblock %}
 
 {% block content %}
-<div class="m-auto col-md-6">
-<div class="pt-5 mt-5 content-section">
+<div class="lr-form">
+    <span class="lrhead">Login</span>
     <form action="" method="POST">
         {% csrf_token %}
-        <fieldset class="form-group">
-            <legend class="border-bottom mb-4">Login</legend>
-            {{form|crispy}}
-        </fieldset>
-        <div class="form-group">
-            <button class="btn btn-outline-info" type="submit">Login</button>
-            <small class="text-muted ml-2">
-                <a href="{% url 'password_reset' %}">Forgot Password?</a>
-            </small>
-        </div>
+        {{form.as_p}}
+        <input type="submit" value="Submit">
     </form>
-    <div class="border-top pt-3">
-        <small class="text-muted">
-            Need an Account? <a class="ml-2" href="{% url 'register' %}">Sign Up Now</a>
-        </small>
-    </div>
+    <a href="{% url 'password_reset' %}">Forgot Password?</a>
+    <p class="text-muted">
+        Need an Account? <a class="ml-2" href="{% url 'register' %}">Sign Up Now</a>
+    </p>
 </div>
-</div>
+
 {% endblock %}

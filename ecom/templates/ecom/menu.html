@@ -45,9 +45,9 @@
                     <div class="container">
                         <h4><b>{{product.item}}</b></h4> 
                         <p style="opacity: 0.5; margin-bottom: 24px;">{{product.description}}</p>
-                        <p>
-                            <i class="far fa-heart nf-heart"></i>
-                        </p>
+                        <div id="like-section-{{ product.pk }}">
+                            {% include 'ecom/like_section.html' %}
+                        </div>
                         <p>
                             {% for i in product.rating %}
                                 {% if i == '1' %}
@@ -64,5 +64,62 @@
 
             </div>
         {% endfor %}
+
+{% endblock %}
+
+
+{% block scripts %}
+
+    <script type="text/javascript">
+
+        function toggleLike(x){
+            if(x.classList.contains('far'))
+            {
+                x.classList.remove('far')
+                x.classList.add('fas')
+            }
+            else
+            {
+                x.classList.remove('fas')
+                x.classList.add('far')
+            } 
+        }
+
+        $(document).ready(function(event){
+        
+            // LIKE POSTS
+
+            $(document).on('click','#like',function(event){
+                event.preventDefault();
+                var pk = $(this).attr('value');
+                $.ajax({
+                type: 'POST',
+                url: '{% url "product-like" %}',
+                data: {'id':pk, 'csrfmiddlewaretoken':'{{ csrf_token }}'},
+                dataType: 'json',
+                success: function(response){
+                    // var newresp = response['form'].replace(`value=""`,`value='${pk}'`)
+                    // if(newresp.includes(`class="far fa-heart nf-heart"`))
+                    // {
+                    //     var newresp2 = newresp.replace(`class="far fa-heart nf-heart"`,`class="fas fa-heart f-heart"`)
+                    // }
+                    // if(newresp.includes(`class="fas fa-heart f-heart"`))
+                    // {
+                    //     var newresp2 = newresp.replace(`class="fas fa-heart f-heart"`,`class="far fa-heart nf-heart"`)
+                    // }
+                    
+                    // $(`#like-section-${pk}`).html(newresp2);
+                    // console.log(newresp2);
+                    // console.log(newresp.includes(`class="far fa-heart nf-heart"`));
+                    // console.log($('#like-section').html(response['form']));
+
+                },
+                error: function(rs, e){
+                    console.log(rs.responseText);
+                },
+                });
+            });
+        });
+    </script>
 
 {% endblock %}

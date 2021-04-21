@@ -29,6 +29,7 @@ body{
     justify-content: space-between;
     align-items: center;
     z-index: 2;
+    /* box-shadow: 5px -1px 12px -5px grey; */
     transition: all 0.4s ease-in-out;
 }
 
@@ -36,6 +37,51 @@ body{
     font-size: 24px;
     padding: 0px 8px;
     flex: 1;
+}
+
+.user-icon{
+  font-size: 26px;
+  margin-right: 30px;
+}
+
+.dropbtn {
+  background-color: #ffffff;
+  color: rgb(68, 68, 68);
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+}
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-content {
+  display: none;
+  right: 0;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+.dropdown-content a {
+  color: black;
+  padding: 14px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+.dropdown-content a:hover {background-color: #f1f1f1}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+.dropdown:hover .dropbtn {
+  background-color: #ffffff;
 }
 
 .searchtoggle{
@@ -53,10 +99,12 @@ body{
     height: 2px;
     background-color: rgb(255, 38, 0);
     margin: 8px 0;
+    margin-right: 40px;
 }
 
 .nav-fbg{
   background-color: rgb(255, 255, 255) !important;
+  box-shadow: 5px -1px 12px -5px grey;
 }
 
 /* SIDENAV */
@@ -188,7 +236,7 @@ body{
     color: #fff;
     font-family: 'open sans';
     padding: 18px 28px;
-    text-decoration: none;
+    text-decoration: none !important;
     transition: all 0.2s ease-in;
     border: 1px solid rgb(255, 70, 70);
     /* border-radius: 0% 50px 0% 50px; */
@@ -849,4 +897,55 @@ ul.breadcrumb li a:hover {
   background-color: white;
   color: #FD0100;
   border: 1px solid #FD0100;
+}
+
+/* LOGIN AND REGISTER FORM */
+
+.lr-form{
+  padding: 2em;
+  margin: 0 auto;
+  display: block;
+  max-width: 400px;
+  box-shadow: 0px 0px 12px -5px grey;
+}
+
+
+.lr-form input, select, textarea {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+  margin-bottom: 12px;
+  resize: vertical;
+  background-color: transparent;
+  color: rgb(0, 0, 0);
+}
+
+.lr-form input[type=submit] {
+  background-color: #ff0101;
+  color: white;
+  padding: 12px 20px;
+  border: none;
+  cursor: pointer;
+  border: 1px solid #ff0101;
+}
+
+.lr-form input[type=submit]:hover {
+  background-color: rgb(255, 255, 255);
+  color: #FD0100;
+}
+
+.lrhead {
+  display: block;
+  padding: 60px 0px 10px 0px;
+  letter-spacing: 1.2px;
+  font-size: 24px;
+  font-weight: 600;
+}
+
+.smtmsg{
+  margin: 0 auto;
+  display: block;
+  max-width: 400px;
+  margin-top: 100px;
 }
