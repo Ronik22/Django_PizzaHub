@@ -1,0 +1,29 @@
+{% load static %}
+{% for product in wishlist %}
+        <div class="card">
+            <img src="{% static 'ecom/images/karthik-garikapati-oBbTc1VoT-0-unsplash.jpg' %}" alt="Avatar" style="width:100%">
+            <div class="middle">
+                <div class="text"><i class="fas fa-cart-plus"></i></div>
+            </div>
+            <div class="container">
+                <h4><b>{{product.item}}</b></h4> 
+                <p style="opacity: 0.5; margin-bottom: 24px;">{{product.description}}</p>
+                <div>
+                    <form action="{% url 'wishlist-remove' %}" method="POST">
+                        {% csrf_token %}
+                        <a id="like" type="submit" name="product_id" value="{{product.id}}" ><i class="fas fa-ban f-heart"></i></a>
+                    </form>
+                </div>
+                <p>
+                    {% for i in product.rating %}
+                        {% if i == '1' %}
+                            <span class="fas fa-star f-star"></span>
+                        {% else %}
+                            <span class="far fa-star nf-star"></span>
+                        {% endif %}
+                    {% endfor %}
+                </p>
+                <p class="c-subtext">₹ {{product.price}}/-</p> 
+            </div>
+        </div>
+{% endfor %}

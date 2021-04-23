@@ -46,16 +46,13 @@ def LikeView(request):
         if p.likes.filter(id=request.user.id).exists():
             already_liked.append(p)
 
-
     product = get_object_or_404(Product, id=request.POST.get('id'))
-    liked = False
+
     if product.likes.filter(id=request.user.id).exists():
         product.likes.remove(request.user)
-        liked = False
         already_liked.remove(product)
     else:
         product.likes.add(request.user)
-        liked = True
         already_liked.append(product)
 
     context["categories"] = categories
@@ -65,3 +62,46 @@ def LikeView(request):
     if request.is_ajax():
         html = render_to_string('ecom/like_section.html',context, request=request)
         return JsonResponse({'form':html})
+
+
+@login_required
+def wishlist(request):
+    user = request.user
+    likes = user.product_like.all()
+    context = {
+        "wishlist": likes
+    }
+    return render(request, 'ecom/wishlist.html', context)
+
+
+@login_required
+def remove_from_wishlist(request):
+    user = request.user
+    product = get_object_or_404(Product, id=request.POST.get('id'))
+    likes = user.product_like.all()
+    product.likes.remove(user)
+
+    context = {
+        "wishlist": user.product_like.all()
+    }
+    if request.is_ajax():
+        html = render_to_string('ecom/wishlist_section.html',context, request=request)
+        return JsonResponse({'form':html})
+
+
+
+""" Search by product or category """
+def search(request):
+    query = request.GET['query']
+    if len(query) >= 150 or len(query) < 1:
+        res = Product.objects.none()
+    elif len(query.strip()) == 0:
+        res = Product.objects.none()
+    else:
+        allprod = Product.objects.filter(item__icontains=query)
+        # allcatg = Category.objects.filter(title__icontains=query)[0].Category.all()
+        # res = allprod.union(allcatg)
+        res = allprod
+    
+    params = {'res': res}
+    return render(request, 'ecom/search_results.html', params)

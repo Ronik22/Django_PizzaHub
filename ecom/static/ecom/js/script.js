@@ -9,6 +9,15 @@ function closeNav() {
 }
 
 
+function openSearch() {
+    document.getElementById("myOverlay").style.display = "block";
+    document.querySelector('body').style.overflow = 'hidden'
+}
+function closeSearch() {
+    document.getElementById("myOverlay").style.display = "none";
+    document.querySelector('body').style.overflow = 'auto'
+}
+
 // ON SCROLL TRIGGER NAV COLOR
 
 const navbar = document.querySelector('.mynavbar');

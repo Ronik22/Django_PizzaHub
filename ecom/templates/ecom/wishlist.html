@@ -1,0 +1,55 @@
+{% extends "ecom/base.html" %}
+
+{% block title %}
+    Pizza-Hub | Wishlist
+{% endblock %}
+
+{% block fbgnav %}
+    nav-fbg
+{% endblock %}
+
+{% block content %}
+
+    <!-- FIRST PART -->
+
+    <div class="m-jumbo">
+        <h2 class="p2-heading">Wishlist</h2>
+    </div>
+
+    <!-- SECOND PART -->
+
+    
+    <div id="wishlist-p" class="second-part">
+        {% include 'ecom/wishlist_section.html' %}
+    </div>
+
+{% endblock %}
+
+{% block scripts %}
+
+    <script type="text/javascript">
+
+        $(document).ready(function(event){
+        
+            // REMOVE FROM WISHLIST
+
+            $(document).on('click','#like',function(event){
+                event.preventDefault();
+                var pk = $(this).attr('value');
+                $.ajax({
+                type: 'POST',
+                url: '{% url "wishlist-remove" %}',
+                data: {'id':pk, 'csrfmiddlewaretoken':'{{ csrf_token }}'},
+                dataType: 'json',
+                success: function(response){
+                    $(`#wishlist-p`).html(response["form"]);
+                },
+                error: function(rs, e){
+                    console.log(rs.responseText);
+                },
+                });
+            });
+        });
+    </script>
+
+{% endblock %}
