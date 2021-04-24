@@ -5,14 +5,14 @@ from ecom.models import Product
 # Create your models here.
 
 class Cart(models.Model):
-    user = models.ForeignKey(User, null=True, blank=True, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     count = models.PositiveIntegerField(default=0)
     total = models.DecimalField(default=0.00, max_digits=10, decimal_places=2)
     updated = models.DateTimeField(auto_now=True)
     timestamp = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f"User: {self.user} has {self.count} items in their cart. Their total is ${self.total}"
+        return f"{self.user} has {self.count} items in their cart. Their total is ₹ {self.total}"
 
 
 

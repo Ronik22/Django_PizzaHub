@@ -170,14 +170,13 @@ body{
   z-index: 3;
   top: 0;
   left: 0;
-  background-color: rgb(0,0,0);
   background-color: rgba(0,0,0, 0.9);
 }
 
 .overlay-content {
   position: relative;
   top: 46%;
-  width: 80%;
+  width: 90%;
   text-align: center;
   margin-top: 30px;
   margin: auto;
@@ -189,20 +188,21 @@ body{
   right: 45px;
   font-size: 60px;
   cursor: pointer;
-  color: white;
+  color: rgb(255, 255, 255);
 }
 
 .overlay .closebtn:hover {
-  color: #ccc;
+  color: rgb(255, 5, 5);
 }
 
 .overlay input[type=text] {
   padding: 15px;
   font-size: 17px;
   border: none;
-  float: left;
-  width: 80%;
+  border-radius: 60pX 0 0 60px;
   background: white;
+  display: inline;
+  outline: none;
 }
 
 .overlay input[type=text]:hover {
@@ -210,17 +210,19 @@ body{
 }
 
 .overlay button {
-  float: right;
-  /* width: 15%; */
-  padding: 15px;
-  background: #ddd;
+  padding: 16px;
+  background: #FD0100;
+  color: #ffffff;
   font-size: 17px;
   border: none;
+  border-radius: 0 60pX 60px 0;
   cursor: pointer;
+  display: inline;
 }
 
 .overlay button:hover {
-  background: #bbb;
+  background: rgb(255, 255, 255);
+  color: rgb(255, 36, 36);
 }
 
 
@@ -1013,4 +1015,63 @@ ul.breadcrumb li a:hover {
   display: block;
   max-width: 400px;
   margin-top: 100px;
+}
+
+
+/* PROFILE PAGE */
+
+/* .prof-d2{
+  background-color: rgb(240, 240, 240);
+  height: 100vh;
+  width: 100%;
+} */
+
+.prof-container {
+  width: 400px;
+  margin: 180px auto 120px;
+  background-color: rgb(255, 255, 255);
+  padding: 0 20px 20px;
+  border-radius: 6px;
+  -webkit-border-radius: 6px;
+  -moz-border-radius: 6px;
+  box-shadow: 0px 0px 8px 2px rgba(0,0,0,0.075);
+  -webkit-box-shadow: 0px 0px 8px 2px rgba(0,0,0,0.075);
+  -moz-box-shadow: 0px 0px 8px 2px rgba(0,0,0,0.075);
+  /* text-align: center; */
+}
+
+.prof-container h3, h5{
+  text-align: center;
+}
+
+.avatar-prof {
+  border-radius: 100px;
+  overflow: hidden;
+  height: 150px;
+  width: 150px;
+  position: relative;
+  margin: auto;
+  top: -60px;
+  box-shadow: 0 0 0 13px #f0f0f0;
+  -webkit-box-shadow: 0 0 0 13px #f0f0f0;
+  -moz-box-shadow: 0 0 0 13px #f0f0f0;
+}
+.avatar-flip img {
+  position: absolute;
+  left: 0;
+  top: 0;
+  border-radius: 100px;
+  transition: all 0.3s ease-in-out;
+  -webkit-transition: all 0.3s ease-in-out;
+  -moz-transition: all 0.3s ease-in-out;
+}
+.avatar-flip img {
+  z-index: 1;
+}
+
+
+/* BOOTSTRAP BTN */
+
+.btn{
+  border-radius: 0 !important;
 }

@@ -12,21 +12,14 @@
 {% block content %}
 
     <div class="m-jumbo">
-        <h2 class="p2-heading">Search Results ({{res|length}})</h2>
+        <h2 class="p2-heading">Search Results</h2>
     </div>
 
-    <div class="second-part">
-        {% if res|length == 0 %}
-        <div class="content-section">
-            <p>Your search did not match any posts ...</p>
+    <ul class="breadcrumb">
+        <em>Your search returned {{res|length}} result{{res|length|pluralize}}</em>
+    </ul>
 
-            <p class="text-muted">Suggestions:</p>
-            <ul class="text-muted">
-                <li>Make sure that all words are spelled correctly.</li> 
-                <li>Try different keywords.</li>
-            </ul> 
-        </div>
-        {% endif %}
+    <div class="second-part">
 
         {% for product in res %}
             <div class="card">

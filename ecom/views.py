@@ -105,3 +105,4 @@ def search(request):
     
     params = {'res': res}
     return render(request, 'ecom/search_results.html', params)
+
