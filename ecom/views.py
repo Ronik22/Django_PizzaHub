@@ -1,3 +1,4 @@
+from cart.models import Cart
 from django.shortcuts import render, get_object_or_404
 from .models import Product, Category
 from django.contrib.auth.decorators import login_required
@@ -20,16 +21,25 @@ def menu(request):
     context = {}
     context["products"] = {}
     already_liked = []
+    in_cart = []
+
+    cart = get_object_or_404(Cart, user=request.user).cart_entry.all()
 
     for p in products:
         context["products"][p.pk] = {}
         context["products"][p.pk]["item"] = p
         context["products"][p.pk]["is_liked"] = p.likes.filter(id=request.user.id).exists()
+
+        # cart items
+        cartp = cart.filter(product=p)
+        if cartp:
+            in_cart.append(p)
         if p.likes.filter(id=request.user.id).exists():
             already_liked.append(p)
 
     context["categories"] = categories
     context["already_liked"] = already_liked
+    context["in_cart"] = in_cart
     # print(context)
 
     return render(request, 'ecom/menu.html', context)
@@ -68,8 +78,18 @@ def LikeView(request):
 def wishlist(request):
     user = request.user
     likes = user.product_like.all()
+    cart = get_object_or_404(Cart, user=request.user).cart_entry.all()
+    in_cart = []
+
+    for p in likes:
+        # cart items
+        cartp = cart.filter(product=p)
+        if cartp:
+            in_cart.append(p)
+
     context = {
-        "wishlist": likes
+        "wishlist": likes,
+        "in_cart":in_cart
     }
     return render(request, 'ecom/wishlist.html', context)
 

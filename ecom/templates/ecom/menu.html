@@ -40,7 +40,9 @@
                 <div class="card">
                     <img src="{% static 'ecom/images/karthik-garikapati-oBbTc1VoT-0-unsplash.jpg' %}" alt="Avatar" style="width:100%">
                     <div class="middle">
-                        <div class="text"><i class="fas fa-cart-plus"></i></div>
+                        <div id="cart-section-{{ product.pk }}" class="text">
+                            {% include 'ecom/add_to_cart_section.html' %}
+                        </div>
                     </div>
                     <div class="container">
                         <h4><b>{{product.item}}</b></h4> 
@@ -85,6 +87,19 @@
             } 
         }
 
+        function toggleCart(x){
+            if(x.classList.contains('fa-vote-yea'))
+            {
+                x.classList.remove('fa-vote-yea')
+                x.classList.add('fa-cart-plus')
+            }
+            else
+            {
+                x.classList.remove('fa-cart-plus')
+                x.classList.add('fa-vote-yea')
+            } 
+        }
+
         $(document).ready(function(event){
         
             // LIKE POSTS
@@ -98,20 +113,6 @@
                 data: {'id':pk, 'csrfmiddlewaretoken':'{{ csrf_token }}'},
                 dataType: 'json',
                 success: function(response){
-                    // var newresp = response['form'].replace(`value=""`,`value='${pk}'`)
-                    // if(newresp.includes(`class="far fa-heart nf-heart"`))
-                    // {
-                    //     var newresp2 = newresp.replace(`class="far fa-heart nf-heart"`,`class="fas fa-heart f-heart"`)
-                    // }
-                    // if(newresp.includes(`class="fas fa-heart f-heart"`))
-                    // {
-                    //     var newresp2 = newresp.replace(`class="fas fa-heart f-heart"`,`class="far fa-heart nf-heart"`)
-                    // }
-                    
-                    // $(`#like-section-${pk}`).html(newresp2);
-                    // console.log(newresp2);
-                    // console.log(newresp.includes(`class="far fa-heart nf-heart"`));
-                    // console.log($('#like-section').html(response['form']));
 
                 },
                 error: function(rs, e){
@@ -119,6 +120,26 @@
                 },
                 });
             });
+
+
+            $(document).on('click','#atc',function(event){
+                event.preventDefault();
+                var pk = $(this).attr('value');
+                $.ajax({
+                type: 'POST',
+                url: '{% url "add-to-cart" %}',
+                data: {'id':pk, 'csrfmiddlewaretoken':'{{ csrf_token }}'},
+                dataType: 'json',
+                success: function(response){
+                    console.log("Item added to cart");
+                },
+                error: function(rs, e){
+                    console.log(rs.responseText);
+                },
+                });
+            });
+
+
         });
     </script>
 

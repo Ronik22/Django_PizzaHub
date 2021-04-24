@@ -12,13 +12,13 @@ class Cart(models.Model):
     timestamp = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f"{self.user} has {self.count} items in their cart. Their total is ₹ {self.total}"
+        return f"{self.user} 's cart"
 
 
 
 class Entry(models.Model):
-    product = models.ForeignKey(Product, null=True, on_delete=models.CASCADE)
-    cart = models.ForeignKey(Cart, null=True, on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, null=True, on_delete=models.CASCADE, related_name="product_entry")
+    cart = models.ForeignKey(Cart, null=True, on_delete=models.CASCADE, related_name="cart_entry")
     quantity = models.PositiveIntegerField()
 
     def __str__(self):

@@ -3,7 +3,9 @@
         <div class="card">
             <img src="{% static 'ecom/images/karthik-garikapati-oBbTc1VoT-0-unsplash.jpg' %}" alt="Avatar" style="width:100%">
             <div class="middle">
-                <div class="text"><i class="fas fa-cart-plus"></i></div>
+                <div id="cart-section-{{ product.pk }}" class="text">
+                    {% include 'ecom/add_to_cart_section.html' %}
+                </div>
             </div>
             <div class="container">
                 <h4><b>{{product.item}}</b></h4> 
