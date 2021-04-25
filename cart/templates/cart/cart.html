@@ -29,6 +29,7 @@
                     <th>Quantity</th>
                     <th>Total</th>
                 </tr>
+                <tbody id="all_products">
                 {% for item in products %}
                     <tr>
                         <td class="shpimg">
@@ -36,31 +37,21 @@
                             <div>{{item.product.item}}</div>
                         </td>
                         <td>{{item.product.price}}</td>
-                        <td>
-                            <input id="cartitemno" class="tdinp" type="number" value="{{item.quantity}}" min="1" max="10">
+                        <td class="quantity">
+                            <input id="cartitemno" class="tdinp" type="number" value="{{item.quantity}}" min="0" max="10">
                         </td>
-                        <td>$99.99</td>
+                        <td>{{item.product.price}}</td>
                     </tr>
                 {% endfor %}
+                </tbody>
                 
-                <!-- <tr>
-                    <td class="shpimg">
-                        <img src="{% static 'ecom/images/karthik-garikapati-oBbTc1VoT-0-unsplash.jpg' %}" alt="">
-                        <div>Explorer</div>
-                    </td>
-                    <td>$19.99</td>
-                    <td>
-                        <input class="tdinp" type="number" value="3" min="1" max="10">
-                    </td>
-                    <td>$99.99</td>
-                </tr> -->
                 <tr>
                     <td class="thsplft">
                         
                     </td>
                     <td></td>
-                    <td>6</td>
-                    <td>$249.99</td>
+                    <td id="total_quantity">5454</td>
+                    <td id="total_display">$5454</td>
                 </tr>
             </table>
         </div>
@@ -78,4 +69,36 @@
 {% endblock %}
 
 {% block scripts %}
+
+<script>
+    document.querySelectorAll(".quantity").forEach(qty => qty.addEventListener("change", changeSubtotal));
+    total();
+
+    // Change subtotal
+    function changeSubtotal(element) {
+        var price = this.previousElementSibling.innerHTML;
+        var quantity = element.target.value; 
+        var subtotal = parseFloat(price * quantity).toFixed(2);
+        this.nextElementSibling.innerHTML = subtotal;
+        total();
+    }
+
+    // Sum total
+    function total(){
+        var totalDisplay = document.getElementById("total_display");
+        var totalQuantity = document.getElementById("total_quantity");
+        var sum = 0;
+        var noitems = 0;
+        var tbody = document.getElementById("all_products");
+        for (var i = 0; i < tbody.rows.length; i++) {
+            sum = sum + parseFloat(tbody.rows[i].cells[3].innerHTML);
+            noitems = noitems + parseFloat(tbody.rows[i].cells[2].getElementsByTagName('input')[0].value);
+        }
+        var total = sum.toFixed(2);
+        var totalitems = noitems.toFixed(2);
+        totalDisplay.innerHTML = "$ " + total;
+        totalQuantity.innerHTML = totalitems;
+    }
+</script>
+
 {% endblock %}
