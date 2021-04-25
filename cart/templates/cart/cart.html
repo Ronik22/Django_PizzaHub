@@ -50,8 +50,8 @@
                         
                     </td>
                     <td></td>
-                    <td id="total_quantity">5454</td>
-                    <td id="total_display">$5454</td>
+                    <td id="total_quantity">0</td>
+                    <td id="total_display">₹0</td>
                 </tr>
             </table>
         </div>
@@ -59,14 +59,19 @@
         <div class="shpcheckout">
             <h3>Order Summary:</h3>
             <hr style="margin: 20px 0px 30px 0px;">
-            <span>&nbsp&#9745 Item Subtotal: $249.99</span>
-            <span>&nbsp&#9745 Discount: $49</span>
-            <span>&nbsp&#9745 Delivery Charges: FREE</span> 
-            <span>&nbsp&#9745 Amount to be paid: $200.99</span>
-            <button>Checkout</button>
+            <span>&nbsp&#9745 Item Subtotal: ₹<span id="total_display2">0</span></span>
+            <!-- <span>&nbsp&#9745 Discount: $49</span> -->
+            <span>&nbsp&#9745 Delivery Charges: ₹<span id="delv_charges">25.0</span></span> 
+            <span>&nbsp&#9745 Amount to be paid: ₹<span id="endtotal_display">0</span></span>
+            <div>
+                <a href="{% url 'menu' %}">Continue Shopping</a>
+                <a>Checkout</a>
+            </div>
+            
         </div>
 
 {% endblock %}
+
 
 {% block scripts %}
 
@@ -86,18 +91,24 @@
     // Sum total
     function total(){
         var totalDisplay = document.getElementById("total_display");
+        var totalDisplay2 = document.getElementById("total_display2");
+        var endtotalDisplay = document.getElementById("endtotal_display");
         var totalQuantity = document.getElementById("total_quantity");
+        var delvCharges = document.getElementById("delv_charges");
+
         var sum = 0;
         var noitems = 0;
         var tbody = document.getElementById("all_products");
+
         for (var i = 0; i < tbody.rows.length; i++) {
             sum = sum + parseFloat(tbody.rows[i].cells[3].innerHTML);
-            noitems = noitems + parseFloat(tbody.rows[i].cells[2].getElementsByTagName('input')[0].value);
+            noitems = noitems + parseInt(tbody.rows[i].cells[2].getElementsByTagName('input')[0].value);
         }
         var total = sum.toFixed(2);
-        var totalitems = noitems.toFixed(2);
-        totalDisplay.innerHTML = "$ " + total;
-        totalQuantity.innerHTML = totalitems;
+        totalDisplay.innerHTML =  "₹"+total;
+        totalDisplay2.innerHTML = total;
+        totalQuantity.innerHTML = noitems;
+        endtotalDisplay.innerHTML = (parseFloat(total)-parseFloat(delvCharges.innerText)).toFixed(2);
     }
 </script>
 

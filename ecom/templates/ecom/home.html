@@ -20,7 +20,7 @@
                 </p>
                 <br>
                 <p>
-                    <a class="btn-homepage" href="#">Take a Bite</a>
+                    <a class="btn-homepage" href="{% url 'menu' %}">Take a Bite</a>
                 </p>
             </div>
             <div class="right-content">
@@ -38,13 +38,13 @@
             <div class="card">
                 <img src="{% static 'ecom/images/karthik-garikapati-oBbTc1VoT-0-unsplash.jpg' %}" alt="Avatar" style="width:100%">
                 <div class="middle">
-                    <div class="text"><i class="fas fa-cart-plus"></i></div>
+                    <div class="text"><a href="/menu/#cart-section-{{product.id}}"><i class="fas fa-cart-plus"></i></a></div>
                 </div>
                 <div class="container">
                     <h4><b>{{product.item}}</b></h4> 
                     <p style="opacity: 0.5; margin-bottom: 24px;">{{product.description}}</p>
                     <p>
-                        <i class="far fa-heart nf-heart"></i>
+                        <!-- <i class="far fa-heart nf-heart"></i> -->
                     </p>
                     <p>
                         {% for i in product.rating %}

@@ -947,20 +947,32 @@ ul.breadcrumb li a:hover {
   line-height: 1.5em;
 }
 
-.shpcheckout button {
-  margin-top: 20px;
+.shpcheckout a {
+  margin: 20px 10px 0px 0px;
   background-color: #FD0100;
   border: 1px solid transparent;
-  width: 120px;
+  width: fit-content;
   color: white;
   padding: 10px 15px;
   text-align: center;
   font-size: 16px;
   cursor: pointer;
+  display: inline-block;
   transition: 0.3s ease-in-out;
 }
 
-.shpcheckout button:hover {
+.shpcheckout a:first-child{
+  background-color: rgb(20, 122, 255);
+  text-decoration: none;
+}
+
+.shpcheckout a:first-child:hover {
+  background-color: white;
+  color: rgb(20, 122, 255);
+  border: 1px solid rgb(20, 122, 255);
+}
+
+.shpcheckout a:hover {
   background-color: white;
   color: #FD0100;
   border: 1px solid #FD0100;
