@@ -119,10 +119,28 @@ def search(request):
         res = Product.objects.none()
     else:
         allprod = Product.objects.filter(item__icontains=query)
-        # allcatg = Category.objects.filter(title__icontains=query)[0].Category.all()
-        # res = allprod.union(allcatg)
-        res = allprod
+        allcatg = Category.objects.filter(title__icontains=query)
+        if allcatg:
+            pincatg = allcatg[0].get_products.all()
+            res = allprod.union(pincatg)
+        else:
+            res = allprod
+
+    # CART and LIKE
+    in_cart = []
+    already_liked = []
+    cart = get_object_or_404(Cart, user=request.user).cart_entry.all()
+    for p in res:
+        cartp = cart.filter(product=p)
+        if cartp:
+            in_cart.append(p)
+        if p.likes.filter(id=request.user.id).exists():
+            already_liked.append(p)
     
-    params = {'res': res}
-    return render(request, 'ecom/search_results.html', params)
+    context = {
+        'res': res,
+        'in_cart': in_cart,
+        "already_liked": already_liked
+    }
+    return render(request, 'ecom/search_results.html', context)
 
