@@ -35,6 +35,7 @@
                         <td class="shpimg">
                             <img src="{% static 'ecom/images/karthik-garikapati-oBbTc1VoT-0-unsplash.jpg' %}" alt="">
                             <div>{{item.product.item}}</div>
+                            <div class="pid" hidden>{{item.product.id}}</div>
                         </td>
                         <td>{{item.product.price}}</td>
                         <td class="quantity">
@@ -65,10 +66,14 @@
             <span>&nbsp&#9745 Amount to be paid: ₹<span id="endtotal_display">0</span></span>
             <div>
                 <a href="{% url 'menu' %}">Continue Shopping</a>
-                <a>Checkout</a>
+                <a onclick="checkoutp()">Checkout</a>
             </div>
             
         </div>
+
+        <form hidden id="checkoutfs" action="{% url 'checkout' %}" method="post">{% csrf_token %}
+            <input name="checkoutip" value="" type="text">
+        </form>
 
 {% endblock %}
 
@@ -77,7 +82,15 @@
 
 <script>
     document.querySelectorAll(".quantity").forEach(qty => qty.addEventListener("change", changeSubtotal));
-    total();
+    document.querySelector('body').onload = function() {
+        var container = document.getElementsByClassName('quantity');
+        for(var i=0; i<container.length; i++) {
+            console.log(container[i]);
+            changeSubtotalOnLoad(container[i]);
+        }
+        total();
+    };
+
 
     // Change subtotal
     function changeSubtotal(element) {
@@ -86,6 +99,14 @@
         var subtotal = parseFloat(price * quantity).toFixed(2);
         this.nextElementSibling.innerHTML = subtotal;
         total();
+    }
+
+    // Change subtotal on load
+    function changeSubtotalOnLoad(element) {
+        var price = element.previousElementSibling.innerHTML;
+        var quantity = element.getElementsByTagName('input')[0].value; 
+        var subtotal = parseFloat(price * quantity).toFixed(2);
+        element.nextElementSibling.innerHTML = subtotal;
     }
 
     // Sum total
@@ -109,6 +130,21 @@
         totalDisplay2.innerHTML = total;
         totalQuantity.innerHTML = noitems;
         endtotalDisplay.innerHTML = (parseFloat(total)-parseFloat(delvCharges.innerText)).toFixed(2);
+    }
+
+    function checkoutp(){
+        var tbody = document.getElementById("all_products");
+        var cfs = document.getElementById("checkoutfs");
+        var pdict = {};
+
+        for (var i = 0; i < tbody.rows.length; i++) {
+            PID = tbody.rows[i].cells[0].getElementsByClassName('pid')[0].innerText;
+            noitems = tbody.rows[i].cells[2].getElementsByTagName('input')[0].value;
+            pdict[PID] = noitems;
+        }
+        cfs.getElementsByTagName('input')[1].value = JSON.stringify(pdict);
+        console.log(JSON.stringify(pdict));
+        cfs.submit();
     }
 </script>
 
