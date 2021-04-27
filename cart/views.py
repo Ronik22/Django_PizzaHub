@@ -58,8 +58,9 @@ def checkout(request):
         # calc price
         final_price = final_price + product.price * int(values)
 
-    final_price = final_price - 25
+    final_price = final_price + 25
     context = {
+        "cuser":request.user.profile,
         "pdict":pdict,
         "fprice":final_price
     }

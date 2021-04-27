@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from ecom.models import Product
+from django.utils import timezone
 
 # Create your models here.
 
@@ -26,3 +27,30 @@ class Entry(models.Model):
 
     class Meta:
         verbose_name = 'Entrie'
+
+
+class Order(models.Model):
+    payment_status_choices = (
+        (1, 'SUCCESS'),
+        (2, 'FAILURE'),
+        (3, 'PENDING'),
+    )
+
+    id = models.AutoField(primary_key=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    payment_status = models.IntegerField(choices=payment_status_choices, default=3)
+    items_json = models.CharField(max_length=5000)
+    name = models.CharField(max_length=90)
+    address = models.CharField(max_length=500)
+    city = models.CharField(max_length=100)
+    state = models.CharField(max_length=100)
+    zip_code = models.CharField(max_length=100)
+    phone = models.CharField(max_length=100)
+    amount = models.DecimalField(default=0.00, max_digits=15, decimal_places=2)
+    datetime_of_payment = models.DateTimeField(default=timezone.now)
+    razorpayid = models.CharField(max_length=255,default="")
+    razorpaypaymentid = models.CharField(max_length=255,default="")
+    razorpaysignature = models.CharField(max_length=255, default="")
+
+    def __str__(self):
+        return f"{self.id} - {self.user}"

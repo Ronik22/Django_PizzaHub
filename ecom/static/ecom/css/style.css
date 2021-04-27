@@ -1087,3 +1087,9 @@ ul.breadcrumb li a:hover {
 .btn{
   border-radius: 0 !important;
 }
+
+/* CHECKOUT */
+
+.checkout-main{
+  margin-top: 120px !important;
+}
