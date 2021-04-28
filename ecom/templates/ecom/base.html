@@ -108,11 +108,11 @@
             </div>
             <div class="cfttab2">
                 <span id="gitctf">Get in Touch</span>
-                <form action="#">
-                    <input type="text" id="fname" name="firstname" placeholder="First Name">
-                    <input type="text" id="lname" name="lastname" placeholder="Last Name">
-                    <input type="text" id="email" name="email" placeholder="Email ID">
-                    <textarea id="subject" name="subject" placeholder="Write your message here.." style="height:200px"></textarea>
+                <form action="{% url 'contact-us' %}" method="POST">
+                    {% csrf_token %}
+                    <input required type="text" id="fname" name="fname" placeholder="Name">
+                    <input required type="email" id="email" name="email" placeholder="Email ID">
+                    <textarea id="subject" name="message" placeholder="Write your message here.." style="height:200px"></textarea>
                 
                     <input type="submit" value="Submit">
                 </form>

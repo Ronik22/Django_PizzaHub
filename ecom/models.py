@@ -45,3 +45,13 @@ class Category(models.Model):
 
     class Meta:
         verbose_name = 'Categorie'
+
+
+class Contact(models.Model):
+    name = models.CharField(max_length=150)
+    email = models.CharField(max_length=150)
+    message = models.CharField(max_length=300)
+    datetime = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.id}-{self.name}"

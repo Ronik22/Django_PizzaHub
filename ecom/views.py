@@ -1,6 +1,6 @@
 from cart.models import Cart
-from django.shortcuts import render, get_object_or_404
-from .models import Product, Category
+from django.shortcuts import render, get_object_or_404, redirect
+from .models import Product, Category, Contact
 from django.contrib.auth.decorators import login_required
 from django.template.loader import render_to_string
 from django.http import JsonResponse
@@ -144,3 +144,10 @@ def search(request):
     }
     return render(request, 'ecom/search_results.html', context)
 
+
+def contact_us(request):
+    name = request.POST.get('fname')
+    message = request.POST.get('message')
+    email = request.POST.get('email')
+    Contact.objects.create(name=name, message=message, email=email)
+    return redirect(request.META['HTTP_REFERER'])

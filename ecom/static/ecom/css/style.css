@@ -714,7 +714,7 @@ body{
 /* Contact form */
 
 
-.f-container input[type=text], select, textarea {
+.f-container input[type=text], .f-container input[type=email], .f-container select, .f-container textarea {
   width: 100%;
   padding: 12px;
   border: 1px solid #ccc;
