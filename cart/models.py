@@ -2,9 +2,12 @@ from django.db import models
 from django.contrib.auth.models import User
 from ecom.models import Product
 from django.utils import timezone
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 
 # Create your models here.
 
+""" Cart """
 class Cart(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     count = models.PositiveIntegerField(default=0)
@@ -16,7 +19,7 @@ class Cart(models.Model):
         return f"{self.user} 's cart"
 
 
-
+""" Entry """
 class Entry(models.Model):
     product = models.ForeignKey(Product, null=True, on_delete=models.CASCADE, related_name="product_entry")
     cart = models.ForeignKey(Cart, null=True, on_delete=models.CASCADE, related_name="cart_entry")
@@ -26,9 +29,10 @@ class Entry(models.Model):
         return f"This entry contains {self.quantity} {self.product.item}(s)."
 
     class Meta:
-        verbose_name = 'Entrie'
+        verbose_name_plural = 'Entries'
 
 
+""" Order """
 class Order(models.Model):
     payment_status_choices = (
         (1, 'SUCCESS'),
@@ -54,3 +58,11 @@ class Order(models.Model):
 
     def __str__(self):
         return f"{self.id} - {self.user}"
+
+    
+@receiver(post_save, sender=Entry)
+def update_cart(sender, instance, **kwargs):
+    line_cost = instance.quantity * instance.product.price
+    instance.cart.total += line_cost
+    instance.cart.count += instance.quantity
+    instance.cart.save()

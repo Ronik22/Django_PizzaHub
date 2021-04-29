@@ -27,7 +27,7 @@ class Product(models.Model):
         return self.buyers.count()
 
     def __str__(self):
-        return f"{self.id}-{self.item}"
+        return f"{self.item}"
 
 
 class Category(models.Model):
@@ -41,10 +41,10 @@ class Category(models.Model):
         return Product.objects.filter(category=self.id)
 
     def __str__(self):
-        return f"{self.id}-{self.title}"
+        return f"{self.title}"
 
     class Meta:
-        verbose_name = 'Categorie'
+        verbose_name_plural = 'Categories'
 
 
 class Contact(models.Model):
@@ -55,3 +55,6 @@ class Contact(models.Model):
 
     def __str__(self):
         return f"{self.id}-{self.name}"
+
+    class Meta:
+        verbose_name_plural = 'Contact Us Entries'

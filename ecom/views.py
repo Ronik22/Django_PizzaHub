@@ -150,4 +150,4 @@ def contact_us(request):
     message = request.POST.get('message')
     email = request.POST.get('email')
     Contact.objects.create(name=name, message=message, email=email)
-    return redirect(request.META['HTTP_REFERER'])
+    return redirect(request.META['HTTP_REFERER']+'#footerCtf')
