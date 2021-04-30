@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block title %}
-    Pizza-Hub | Cart
+    Pizza-Hub | Checkout
 {% endblock %}
 
 {% block css %}
@@ -22,33 +22,34 @@
         </div>
     </div>
     <br>
-    <form>
+    <form method="POST" action="{% url 'handle-checkout' %}">
+      {% csrf_token %}
         <div class="form-row">
           <div class="form-group col-md-6">
             <label for="inputName">Full Name</label>
-            <input type="text" class="form-control" id="inputName" value="{{cuser.full_name}}">
+            <input type="text" class="form-control" id="inputName" name="inputName" value="{{cuser.full_name}}">
           </div>
           <div class="form-group col-md-6">
             <label for="inputMobNo">Mobile Number</label>
-            <input type="text" class="form-control" id="inputMobNo" value="{{cuser.mobile_number}}">
+            <input type="text" class="form-control" id="inputMobNo" name="inputMobNo" value="{{cuser.mobile_number}}">
           </div>
         </div>
         <div class="form-group">
           <label for="inputAddress">Full Address</label>
-          <input type="text" class="form-control" id="inputAddress" placeholder="1234 Main St" value="{{cuser.full_address}}">
+          <input type="text" class="form-control" id="inputAddress" name="inputAddress" placeholder="1234 Main St" value="{{cuser.full_address}}">
         </div>
         <div class="form-row">
           <div class="form-group col-md-6">
             <label for="inputCity">City</label>
-            <input type="text" class="form-control" id="inputCity" value="{{cuser.city}}">
+            <input type="text" class="form-control" id="inputCity" name="inputCity" value="{{cuser.city}}">
           </div>
           <div class="form-group col-md-4">
             <label for="inputState">State</label>
-            <input type="text" class="form-control" id="inputState" value="{{cuser.state}}">
+            <input type="text" class="form-control" id="inputState" name="inputState" value="{{cuser.state}}">
           </div>
           <div class="form-group col-md-2">
             <label for="inputZip">Zip</label>
-            <input type="text" class="form-control" id="inputZip" value="{{cuser.pin_code}}">
+            <input type="text" class="form-control" id="inputZip" name="inputZip" value="{{cuser.pin_code}}">
           </div>
         </div>
         <div class="form-group">
@@ -59,8 +60,11 @@
             </label>
           </div>
         </div>
+        <input type="hidden" class="form-control" name="pdict" value="{{pdict}}">
+        <input type="hidden" class="form-control" name="fprice" value="{{fprice}}">
         <button type="submit" class="btn btn-primary">Continue to Payment</button>
     </form>
+
 </div>
 
 {% endblock %}

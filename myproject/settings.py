@@ -156,3 +156,6 @@ EMAIL_HOST_USER = os.getenv('EMAIL_USER')     # environment variable containing 
 EMAIL_HOST_PASSWORD = os.getenv('EMAIL_PASS')  # environment variable containing password
 
 GOOGLE_RECAPTCHA_SECRET_KEY = os.getenv("GOOGLE_RECAPTCHA_SECRET_KEY")
+
+RAZORPAY_KEY_ID = os.getenv('RAZORPAY_KEY_ID')
+RAZORPAY_KEY_SECRET = os.getenv('RAZORPAY_KEY_SECRET')

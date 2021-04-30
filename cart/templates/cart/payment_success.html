@@ -1,0 +1,15 @@
+{% extends "ecom/base.html" %}
+
+{% block title %}Pizza-Hub | Success{% endblock %}
+
+{% block fbgnav %}
+    nav-fbg
+{% endblock %}
+
+{% block content %}
+
+<div class="smtmsg">
+    <h2>Payment Success</h2> 
+    <p><a href="{% url 'menu' %}">Continue shopping</a></p>
+</div>
+{% endblock %}
