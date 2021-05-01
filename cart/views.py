@@ -14,7 +14,6 @@ from myproject.settings import RAZORPAY_KEY_ID, RAZORPAY_KEY_SECRET
 @login_required
 def cart(request):
     cart = get_object_or_404(Cart, user=request.user)
-    # cart = get_object_or_404(Cart, user=request.user).cart_entry.all()
     products = Entry.objects.filter(cart=cart)
     context = {
         "cart":cart,
@@ -103,7 +102,7 @@ def handle_checkout(request):
         current_order = neworder
         order_amount = int(float(current_order.amount) * 100)
         order_currency = 'INR'
-        callback_url = 'http://localhost:8000/cart/paymentsuccess/'
+        callback_url = 'http://localhost:8000/cart/handle_payment/'
         order_receipt = f'ORD2PHID{current_order.id}'
         notes = {
             'Shipping address': current_order.address,
@@ -116,11 +115,12 @@ def handle_checkout(request):
         client = razorpay.Client(auth=(RAZORPAY_KEY_ID, RAZORPAY_KEY_SECRET))
         payment = client.order.create(dict(amount=order_amount, currency=order_currency, receipt=order_receipt, notes=notes, payment_capture=0))
         current_order.razorpayid = payment['id']
+        current_order.order_id = order_receipt
         current_order.save()
 
         context = {
             "order_id" : f'ORD2PHID{current_order.id}',
-            "razorpay_order_id" : payment['id'],
+            "rp_order_id" : payment['id'],
             "order" : current_order,
             "amount" : order_amount,
             "razorpay_id" : RAZORPAY_KEY_ID,
@@ -128,40 +128,47 @@ def handle_checkout(request):
         }
 
         return render(request,'cart/payment.html', context)
-        # return redirect('payment', id=neworder.id)
     else:
         return HttpResponse("505 Not Found")
 
 @csrf_exempt
-def paymentsuccess(request):
-    return render(request,'cart/payment_success.html')
+def handle_payment(request):
+    if request.method == "POST":
+        try:
+            payment_id = request.POST.get('razorpay_payment_id','')
+            order_id = request.POST.get('razorpay_order_id','')
+            signature = request.POST.get('razorpay_signature','')
+            params_dict = {
+                'razorpay_order_id': order_id,
+                'razorpay_payment_id': payment_id,
+                'razorpay_signature': signature,
+            }
+            try:
+                order_db = Order.objects.get(razorpayid=order_id)
+            except:
+                return HttpResponse("505 Not Found")
+            order_db.razorpaypaymentid = payment_id
+            order_db.razorpaysignature = signature
+            order_db.save()
+            client = razorpay.Client(auth=(RAZORPAY_KEY_ID, RAZORPAY_KEY_SECRET))
+            result = client.utility.verify_payment_signature(params_dict)
+
+            if result == None:
+                amount = int(float(order_db.amount) * 100)
+                try:
+                    client.payment.capture(payment_id, amount)
+                    order_db.payment_status = 1
+                    order_db.save()
+                    return render(request, 'cart/payment_success.html')
+                except:
+                    order_db.payment_status = 2
+                    order_db.save()
+                    return render(request, 'cart/payment_failed.html')
+            else:
+                order_db.payment_status = 2
+                order_db.save()
+                return render(request, 'cart/payment_failed.html')
+        except:
+            return HttpResponse("505 Not Found")
 
 
-# @login_required
-# def payment(request,id):
-#     current_order = get_object_or_404(Order, id=id)
-
-#     if request.method == "POST":
-#         order_amount = current_order.amount * 100
-#         order_currency = 'INR'
-#         callback_url = 'http://localhost:8000/cart/paymentsuccess/'
-#         order_receipt = f'ORD2PHID{id}'
-#         notes = {
-#             'Shipping address': current_order.address,
-#             'Phone number': current_order.phone,
-#             'City': current_order.city,
-#             'State': current_order.state,
-#             'Zip code': current_order.zip_code,
-#         }
-
-#         client = razorpay.Client(auth=(RAZORPAY_KEY_ID, RAZORPAY_KEY_SECRET))
-#         payment = client.order.create(amount=order_amount, currency=order_currency, receipt=order_receipt, notes=notes, payment_capture=0)
-#         current_order.razorpayid = payment['id']
-#         current_order.save()
-
-#     context = {
-#         "order_id" : f'ORD2PHID{id}',
-#         "order" : current_order,
-#         "razorpay_id" : RAZORPAY_KEY_ID,
-#     }
-#     return render(request,'cart/payment.html', context)
