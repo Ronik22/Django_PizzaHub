@@ -1,6 +1,6 @@
 {% extends "ecom/base.html" %}
 
-{% block title %}Pizza-Hub | Success{% endblock %}
+{% block title %}Pizza-Hub | Failed{% endblock %}
 
 {% block fbgnav %}
     nav-fbg
@@ -13,7 +13,8 @@
 {% block content %}
 
 <div class="container smtmsg">
-    <h2>Payment Success</h2> 
+    <h2>Payment Failed</h2> 
+    <p>In case your money has been deducted, money will be auto refunded in 7-10 days. You can contact us for any queries or details.</p>
     <br>
     <p><a class="btn btn-primary" href="{% url 'menu' %}">Continue shopping</a></p>
 </div>
