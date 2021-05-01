@@ -26,8 +26,6 @@ class CartAdmin(admin.ModelAdmin):
         EntryInline,
     ]
 
-    # def all_entries(self, request, obj):
-
 
 
 @admin.register(Entry)
@@ -38,5 +36,5 @@ class EntryAdmin(admin.ModelAdmin):
 
 @admin.register(Order)
 class OrderAdmin(admin.ModelAdmin):
-    list_display = ("id", "user", "datetime_of_payment")
+    list_display = ("order_id", "user", "datetime_of_payment")
     list_filter = ("user", "datetime_of_payment",)
