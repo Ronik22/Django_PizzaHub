@@ -41,6 +41,7 @@ class Order(models.Model):
     )
 
     id = models.AutoField(primary_key=True)
+    order_id = models.CharField(max_length=200, default="Unknown")
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     payment_status = models.IntegerField(choices=payment_status_choices, default=3)
     items_json = models.CharField(max_length=5000)
