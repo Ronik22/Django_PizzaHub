@@ -21,6 +21,7 @@
 
         <!-- Cart -->
 
+        {% if products %}
         <div class="shpcart">
             <table id="shptable">
                 <tr>
@@ -74,6 +75,9 @@
         <form hidden id="checkoutfs" action="{% url 'checkout' %}" method="post">{% csrf_token %}
             <input name="checkoutip" value="" type="text">
         </form>
+        {% else %}
+        <p style="text-align: center;"><em>There are no items in your cart.</em></p>
+        {% endif %}
 
 {% endblock %}
 

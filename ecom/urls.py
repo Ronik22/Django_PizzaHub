@@ -1,9 +1,10 @@
 from django.contrib import admin
 from django.urls import path, include
-from .views import contact_us, home, menu, LikeView, wishlist, remove_from_wishlist, search
+from .views import contact_us, home, menu, LikeView, wishlist, remove_from_wishlist, search, about
 
 urlpatterns = [
     path('', home, name="home"),
+    path('about/', about, name="about"),
     path('menu/', menu, name="menu"),
     path('contact_us/', contact_us, name="contact-us"),
     path('wishlist/', wishlist, name="wishlist"),

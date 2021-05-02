@@ -37,6 +37,7 @@
                     <a href="{% url 'profile' %}">Profile</a>
                     <a href="{% url 'wishlist' %}">Wishlist</a>
                     <a href="{% url 'cart' %}">Cart</a>
+                    <a href="{% url 'orders' %}">My Orders</a>
                     <a href="{% url 'logout' %}">Logout</a>
                 {% else %}
                     <a href="{% url 'login' %}">Login</a>
@@ -68,10 +69,9 @@
         <br><br><br>
         <a href="{% url 'home' %}">Home</a>
         <a href="{% url 'menu' %}">Menu</a>
-        <a href="#">Reservation</a>
-        <a href="{% url 'cart' %}">Cart</a>
-        <a href="#">About</a>
-        <a href="#">Contact</a>
+        <!-- <a href="#">Reservation</a> -->
+        <a href="{% url 'about' %}">About</a>
+        <!-- <a href="#">Contact</a> -->
     </div>
 
 

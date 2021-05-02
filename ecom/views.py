@@ -15,6 +15,10 @@ def home(request):
     return render(request, 'ecom/home.html', context)
 
 
+def about(request):
+    return render(request, 'ecom/about.html')
+
+
 def menu(request):
     products = Product.objects.all()
     categories = Category.objects.all()

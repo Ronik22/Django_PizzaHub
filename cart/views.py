@@ -46,8 +46,9 @@ def add_to_cart(request):
 
 @login_required
 def checkout(request):
-    cart = get_object_or_404(Cart, user=request.user)
+
     pdict = request.POST.get('checkoutip')
+    cart = get_object_or_404(Cart, user=request.user)
     pdict = json.loads(pdict)
     final_price = 0
     
@@ -58,6 +59,28 @@ def checkout(request):
         currp.quantity = int(values)
         currp.save()
         # calc price
+        final_price = final_price + product.price * int(values)
+
+    final_price = final_price + 25
+    context = {
+        "cuser":request.user.profile,
+        "pdict":pdict,
+        "fprice":final_price
+    }
+
+    return render(request,'cart/checkout.html', context)
+
+
+@login_required
+def reorder(request):
+    reorder = request.POST.get('checkoutip')
+    reorder = reorder.replace("'","\"")
+    cart = get_object_or_404(Cart, user=request.user)
+    pdict = json.loads(reorder)
+    final_price = 0
+    
+    for keys,values in pdict.items():
+        product = get_object_or_404(Product, id=int(keys))
         final_price = final_price + product.price * int(values)
 
     final_price = final_price + 25
@@ -172,3 +195,10 @@ def handle_payment(request):
             return HttpResponse("505 Not Found")
 
 
+@login_required
+def orders(request):
+    orders = Order.objects.filter(user=request.user)
+    context = {
+        "orders":orders,
+    }
+    return render(request, 'cart/orders.html', context)
