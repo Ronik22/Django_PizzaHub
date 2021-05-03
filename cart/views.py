@@ -105,9 +105,10 @@ def handle_checkout(request):
         inputState = request.POST.get('inputState')
         inputZip = request.POST.get('inputZip')
 
-        ####### NEED TO BE FIXED ########
-        if not inputName and not inputMobNo and not inputAddress and not inputCity and not inputState and not inputZip and not pdict and not final_price:
-            return redirect('cart')  ####### NEED TO BE FIXED ########
+        if all(len(v.split()) != 0 for v in [inputName, inputMobNo, inputAddress, inputCity, inputState, inputZip, pdict, final_price]):
+            pass
+        else:
+            return redirect('cart')
         
         neworder = Order.objects.create(
             user = request.user,

@@ -60,7 +60,8 @@ class Order(models.Model):
     def __str__(self):
         return f"{self.id} - {self.user}"
 
-    
+
+# Need to be fixed  
 @receiver(post_save, sender=Entry)
 def update_cart(sender, instance, **kwargs):
     line_cost = instance.quantity * instance.product.price

@@ -37,12 +37,12 @@
     <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
     <script>
         var options = {
-            "key": "{{razorpay_id}}", // Enter the Key ID generated from the Dashboard
-            "amount": "{{amount}}", // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
+            "key": "{{razorpay_id}}", 
+            "amount": "{{amount}}", 
             "currency": "INR",
             "name": "Pizza-Hub",
             "description": "Test Transaction",
-            "order_id": "{{rp_order_id}}", //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
+            "order_id": "{{rp_order_id}}", 
             "callback_url": "{{callback_url}}",
             "prefill": {
                 "name": "{{order.name}}",

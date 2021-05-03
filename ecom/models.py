@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 
 # Create your models here.
 
+""" Product """
 class Product(models.Model):
     item = models.CharField(max_length=140)
     image = models.ImageField(upload_to='product_images', blank=True, null=True)
@@ -30,6 +31,7 @@ class Product(models.Model):
         return f"{self.item}"
 
 
+""" Category """
 class Category(models.Model):
     title = models.CharField(max_length=150)
     description = models.CharField(max_length=250, blank=True)
@@ -47,6 +49,7 @@ class Category(models.Model):
         verbose_name_plural = 'Categories'
 
 
+""" Contact US """
 class Contact(models.Model):
     name = models.CharField(max_length=150)
     email = models.CharField(max_length=150)

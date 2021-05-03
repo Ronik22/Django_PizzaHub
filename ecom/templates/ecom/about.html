@@ -9,6 +9,24 @@
     nav-fbg
 {% endblock %}
 
+{% block css %}
+    <style>
+        .map-responsive{
+            overflow:hidden;
+            margin: 1.5em;
+            padding-bottom:56.25%;
+            position:relative;
+            height:0;
+        }
+        .map-responsive iframe{
+            left:0;
+            top:0;
+            height:100%;
+            width:100%;
+            position:absolute;
+        }
+    </style>
+{% endblock %}
 
 {% block content %}
 
@@ -30,21 +48,5 @@
     <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2602.741387495834!2d88.38752588071532!3d22.697268180507596!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0xc2e4a953719795cb!2sDomino&#39;s%20Pizza!5e0!3m2!1sen!2sin!4v1619970351976!5m2!1sen!2sin" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
 </div>
 
-<style>
-    .map-responsive{
-        overflow:hidden;
-        margin: 1.5em;
-        padding-bottom:56.25%;
-        position:relative;
-        height:0;
-    }
-    .map-responsive iframe{
-        left:0;
-        top:0;
-        height:100%;
-        width:100%;
-        position:absolute;
-    }
-</style>
 
 {% endblock %}
