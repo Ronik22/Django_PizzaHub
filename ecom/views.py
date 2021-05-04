@@ -27,19 +27,20 @@ def menu(request):
     already_liked = []
     in_cart = []
 
-    cart = get_object_or_404(Cart, user=request.user).cart_entry.all()
+    if request.user.is_authenticated:
+        cart = get_object_or_404(Cart, user=request.user).cart_entry.all()
 
-    for p in products:
-        context["products"][p.pk] = {}
-        context["products"][p.pk]["item"] = p
-        context["products"][p.pk]["is_liked"] = p.likes.filter(id=request.user.id).exists()
+        for p in products:
+            context["products"][p.pk] = {}
+            context["products"][p.pk]["item"] = p
+            context["products"][p.pk]["is_liked"] = p.likes.filter(id=request.user.id).exists()
 
-        # cart items
-        cartp = cart.filter(product=p)
-        if cartp:
-            in_cart.append(p)
-        if p.likes.filter(id=request.user.id).exists():
-            already_liked.append(p)
+            # cart items
+            cartp = cart.filter(product=p)
+            if cartp:
+                in_cart.append(p)
+            if p.likes.filter(id=request.user.id).exists():
+                already_liked.append(p)
 
     context["categories"] = categories
     context["already_liked"] = already_liked
@@ -133,13 +134,14 @@ def search(request):
     # CART and LIKE
     in_cart = []
     already_liked = []
-    cart = get_object_or_404(Cart, user=request.user).cart_entry.all()
-    for p in res:
-        cartp = cart.filter(product=p)
-        if cartp:
-            in_cart.append(p)
-        if p.likes.filter(id=request.user.id).exists():
-            already_liked.append(p)
+    if request.user.is_authenticated:
+        cart = get_object_or_404(Cart, user=request.user).cart_entry.all()
+        for p in res:
+            cartp = cart.filter(product=p)
+            if cartp:
+                in_cart.append(p)
+            if p.likes.filter(id=request.user.id).exists():
+                already_liked.append(p)
     
     context = {
         'res': res,

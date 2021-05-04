@@ -78,7 +78,19 @@
     <!-- MAIN BODY -->
 
     <main>
-
+    <!-- <main style="margin-top: 120px;"> -->
+            
+        {% if messages %}
+            <div class="msgmessages">
+                {% for message in messages %}
+                    <div class="alertmsg {% if message.tags %} {{ message.tags }} {% endif %} ">
+                        <span class="closebtnmsg">&times;</span>  
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+        
         {% block content %}{% endblock %}
 
     </main>

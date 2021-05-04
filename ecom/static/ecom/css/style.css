@@ -13,6 +13,43 @@ body{
 }
 
 
+/* FLASH MESSAGES */
+
+.msgmessages{
+  height: fit-content;
+  margin: 70px 10px 0px 10px;
+  z-index: 2;
+}
+
+.alertmsg {
+  padding: 20px;
+  background-color: #2196F3;
+  color: white;
+  opacity: 1;
+  transition: opacity 0.6s;
+  margin-bottom: 15px;
+}
+
+.alertmsg.success {background-color: #04AA6D;}
+.alertmsg.info {background-color: #2196F3;}
+.alertmsg.warning {background-color: #ff9800;}
+.alertmsg.danger {background-color: #ff1100;}
+
+.closebtnmsg {
+  margin-left: 15px;
+  color: white;
+  font-weight: bold;
+  float: right;
+  font-size: 22px;
+  line-height: 20px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.closebtnmsg:hover {
+  color: black;
+}
+
 /* NAVBAR */
 
 .mynavbar{

@@ -1,4 +1,10 @@
 {% load static %}
+
+<ul class="breadcrumb">
+    <em>You have wishlisted {{wishlist|length}} items</em>
+</ul>
+
+<div class="second-part">
 {% for product in wishlist %}
         <div class="card">
             <img src="{% static 'ecom/images/karthik-garikapati-oBbTc1VoT-0-unsplash.jpg' %}" alt="Avatar" style="width:100%">
@@ -29,3 +35,4 @@
             </div>
         </div>
 {% endfor %}
+</div>

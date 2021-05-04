@@ -1,3 +1,15 @@
+// FLASH MESSAGES
+var close = document.getElementsByClassName("closebtnmsg");
+var i;
+
+for (i = 0; i < close.length; i++) {
+  close[i].onclick = function(){
+    var div = this.parentElement;
+    div.style.opacity = "0";
+    setTimeout(function(){ div.style.display = "none"; }, 600);
+  }
+}
+
 function openNav() {
     document.getElementById("mySidenav").style.width = "100%";
     document.querySelector('body').style.overflow = 'hidden'
