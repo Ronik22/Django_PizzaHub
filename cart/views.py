@@ -22,6 +22,7 @@ def cart(request):
     return render(request, 'cart/cart.html', context)
 
 
+""" Add to cart or delete if present """
 @login_required
 def add_to_cart(request):
     cart = get_object_or_404(Cart, user=request.user)
@@ -203,3 +204,17 @@ def orders(request):
         "orders":orders,
     }
     return render(request, 'cart/orders.html', context)
+
+
+""" Remove from cart only """
+@login_required
+def remove_from_cart(request, id):
+    cart = get_object_or_404(Cart, user=request.user)
+    product = get_object_or_404(Product, id=id)
+    cartlist = cart.cart_entry.all()
+
+    cartp = cartlist.filter(product=product)
+    if cartp:
+        get_object_or_404(Entry, product=product, cart=cart).delete()
+
+    return redirect('cart')

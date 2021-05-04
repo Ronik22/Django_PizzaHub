@@ -36,11 +36,18 @@
                         <td class="shpimg">
                             <img src="{% static 'ecom/images/karthik-garikapati-oBbTc1VoT-0-unsplash.jpg' %}" alt="">
                             <div>{{item.product.item}}</div>
+                            &nbsp;&nbsp;&nbsp;&nbsp;
+
+                            <form action="{% url 'remove-from-cart' item.product.id %}" method="POST">
+                                {% csrf_token %}
+                                <button title="Remove from Cart" style="border: 0; background-color: transparent; cursor: pointer;" type="submit" name="product_id" ><i class="fas fa-trash-alt f-heart"></i></button>
+                            </form>
+                            
                             <div class="pid" hidden>{{item.product.id}}</div>
                         </td>
                         <td>{{item.product.price}}</td>
                         <td class="quantity">
-                            <input id="cartitemno" class="tdinp" type="number" value="{{item.quantity}}" min="0" max="10">
+                            <input id="cartitemno" class="tdinp" type="number" value="{{item.quantity}}" min="1" max="10">
                         </td>
                         <td>{{item.product.price}}</td>
                     </tr>
