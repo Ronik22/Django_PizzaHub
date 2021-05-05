@@ -40,13 +40,14 @@
                     </tr>
                 </thead>
                 <tbody>
-                    {% for order in orders %}
+                    {% for key,order in orders2.items %}
                     <tr>
                         <th scope="row">{{order.order_id}}</th>
-                        <td>{{order.items_json}}</td>
+                        <!-- <td>{{order.items_json}}</td> -->
+                        <td>{{order.productlist}}</td>
                         <td>{{order.amount}}</td>
                         <td>{{order.datetime_of_payment}}</td>
-                        <td>{{order.get_payment_status_display}}</td>
+                        <td>{{order.payment_status}}</td>
                         <td>{{order.address}}</td>
                         <td>{{order.phone}}</td>
                         <td>

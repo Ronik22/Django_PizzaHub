@@ -157,3 +157,7 @@ def contact_us(request):
     email = request.POST.get('email')
     Contact.objects.create(name=name, message=message, email=email)
     return redirect(request.META['HTTP_REFERER']+'#footerCtf')
+
+
+def product_details(request):
+    return render(request, 'ecom/product_details.html')

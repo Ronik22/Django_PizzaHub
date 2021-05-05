@@ -197,14 +197,6 @@ def handle_payment(request):
             return HttpResponse("505 Not Found")
 
 
-@login_required
-def orders(request):
-    orders = Order.objects.filter(user=request.user)
-    context = {
-        "orders":orders,
-    }
-    return render(request, 'cart/orders.html', context)
-
 
 """ Remove from cart only """
 @login_required
@@ -218,3 +210,38 @@ def remove_from_cart(request, id):
         get_object_or_404(Entry, product=product, cart=cart).delete()
 
     return redirect('cart')
+
+
+def pdict_to_parray(pdict):
+    pdict = pdict.replace("'","\"")
+    pdict2 = json.loads(pdict)
+    newlist = ""
+    for keys,values in pdict2.items():
+        product = get_object_or_404(Product, id=int(keys))
+        newlist = newlist + f"{pdict2[keys]} x {product.item}, "
+    return newlist
+
+
+@login_required
+def orders(request):    
+    context2 = {}
+    payment_status_choices = ['SUCCESS', 'FAILURE', 'PENDING']
+    orders = Order.objects.filter(user=request.user)
+    for order in orders:
+        productlist = pdict_to_parray(order.items_json)
+        context2[f"{order.id}"] = {
+            'order_id': order.order_id,
+            'items_json': order.items_json,
+            'productlist': productlist,
+            'amount': str(order.amount),
+            'datetime_of_payment': order.datetime_of_payment.strftime('%b %d, %Y - %I:%M %p'),
+            'payment_status': payment_status_choices[order.payment_status-1],
+            'address': order.address,
+            'phone': order.phone,
+        }
+    context = {}
+    context['orders'] = orders
+    context['orders2'] = context2
+    # print(json.dumps(context2, indent = 4)  )
+
+    return render(request, 'cart/orders.html', context)
