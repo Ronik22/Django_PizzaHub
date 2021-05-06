@@ -37,6 +37,7 @@
                         <th scope="col">Delivered To</th>
                         <th scope="col">Contact No.</th>
                         <th scope="col"></th>
+                        <th scope="col"></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -50,6 +51,7 @@
                         <td>{{order.payment_status}}</td>
                         <td>{{order.address}}</td>
                         <td>{{order.phone}}</td>
+                        <td><a class="btn btn-success" href="{% url 'receipt' order.order_id %}">View Receipt</a></td>
                         <td>
                             <form action="{% url 'reorder' %}" method="post">{% csrf_token %}
                                 <input hidden name="checkoutip" value="{{order.items_json}}" type="text">

@@ -184,7 +184,10 @@ def handle_payment(request):
                     client.payment.capture(payment_id, amount)
                     order_db.payment_status = 1
                     order_db.save()
-                    return render(request, 'cart/payment_success.html')
+                    extra = {
+                        'orderid': order_db.order_id,
+                    }
+                    return render(request, 'cart/payment_success.html', extra)
                 except:
                     order_db.payment_status = 2
                     order_db.save()
@@ -212,7 +215,7 @@ def remove_from_cart(request, id):
     return redirect('cart')
 
 
-def pdict_to_parray(pdict):
+def pdict_to_pstr(pdict):
     pdict = pdict.replace("'","\"")
     pdict2 = json.loads(pdict)
     newlist = ""
@@ -222,13 +225,23 @@ def pdict_to_parray(pdict):
     return newlist
 
 
+def pdict_to_parray(pdict):
+    pdict = pdict.replace("'","\"")
+    pdict2 = json.loads(pdict)
+    newlist = []
+    for keys,values in pdict2.items():
+        product = get_object_or_404(Product, id=int(keys))
+        newlist.append([pdict2[keys], product.item, product.price])
+    return newlist
+
+
 @login_required
 def orders(request):    
     context2 = {}
     payment_status_choices = ['SUCCESS', 'FAILURE', 'PENDING']
     orders = Order.objects.filter(user=request.user)
     for order in orders:
-        productlist = pdict_to_parray(order.items_json)
+        productlist = pdict_to_pstr(order.items_json)
         context2[f"{order.id}"] = {
             'order_id': order.order_id,
             'items_json': order.items_json,
@@ -245,3 +258,18 @@ def orders(request):
     # print(json.dumps(context2, indent = 4)  )
 
     return render(request, 'cart/orders.html', context)
+
+
+@login_required
+def generate_receipt(request, id):
+    order = Order.objects.get(order_id=id)
+    if order.user == request.user:
+        productlist = pdict_to_parray(order.items_json)
+        context = {
+            'order': order,
+            'productlist': productlist,
+        }
+        return render(request, 'cart/receipt.html', context)
+    else:
+        return HttpResponse("403 Forbidden")
+    

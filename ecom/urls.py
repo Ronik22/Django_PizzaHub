@@ -11,5 +11,5 @@ urlpatterns = [
     path('search/', search, name='search'),
     path('product/remove-like/', remove_from_wishlist, name="wishlist-remove"),
     path('product/like/', LikeView, name='product-like'),
-    path('product/details/', product_details, name='product-details'),
+    path('product/<int:id>/details/', product_details, name='product-details'),
 ]

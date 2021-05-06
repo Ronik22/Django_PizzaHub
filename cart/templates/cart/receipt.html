@@ -1,0 +1,93 @@
+{% extends "ecom/base.html" %}
+{% load static %}
+
+{% block title %}Pizza-Hub | Receipt{% endblock %}
+
+{% block fbgnav %}
+    nav-fbg
+{% endblock %}
+
+{% block css %}
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'ecom/css/receipt_style.css' %}">
+{% endblock %}
+
+{% block content %}
+
+
+<div id="inv-bill" class="invoice-card " style="margin:0 auto; margin-top: 110px;">
+    <div class="invoice-title">
+      <div id="main-title">
+        <h4>RECEIPT</h4>
+        <span>#{{order.order_id}}</span>
+      </div>
+      
+      <span id="date">{{order.datetime_of_payment}}</span>
+    </div>
+    
+    <div class="invoice-details">
+      <table class="invoice-table">
+        <thead>
+          <tr>
+            <td>PRODUCT</td>
+            <td class="text-center">QTY</td>
+            <td>PRICE</td>
+          </tr>
+        </thead>
+        
+        <tbody>
+            {% for item in productlist %}
+                <tr class="row-data">
+                    <td>{{item.1}}</td>
+                    <td class="text-center">{{item.0}}</td>
+                    <td >₹ {{item.2}}</td>
+                </tr>
+            {% endfor %}
+          
+          <tr class="calc-row">
+            <td >Total</td>
+            <td colspan="2">₹ {{order.amount}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="invoice-border">
+        <div class="invoice-dets">
+            <b>NAME</b>
+            <p>{{order.name}}</p>
+        </div>
+        <div class="invoice-dets">
+            <b>ADDRESS</b>
+            <p>{{order.address|title}}. <br>City: {{order.city|title}}, State: {{order.state|title}}, Zip: {{order.zip_code}}</p>
+        </div>
+        <div class="invoice-dets">
+            <b>PHONE NO.</b>
+            <p>{{order.phone}}</p>
+        </div>
+        
+    </div>
+    
+    <div class="invoice-footer">
+      <button class="btn " id="later">{{order.get_payment_status_display}}</button>
+      <a href="javascript:printDiv()" class="btn btn-primary">Print Receipt</a>
+    </div>
+</div>
+<iframe name="print_frame" width="0" height="0" frameborder="0" src="about:blank"></iframe>
+
+{% endblock %}
+
+{% block scripts %}
+<script>
+    myvar = "{% static 'ecom/css/receipt_style.css' %}"
+    printDivCSS = new String (`<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous"> `)
+    printDivCSS2 = new String (`<link href={% static 'ecom/css/style.css' %} rel="stylesheet" type="text/css"> `)
+    printDivCSS3 = new String (`<link href={% static 'ecom/css/receipt_style.css' %} rel="stylesheet" type="text/css"> `)
+    function printDiv() {
+        window.frames["print_frame"].document.body.innerHTML=printDivCSS + printDivCSS2 + printDivCSS3 + document.getElementById('inv-bill').innerHTML;
+        window.frames["print_frame"].window.focus();
+        window.frames["print_frame"].window.print();
+    }
+</script>
+
+{% endblock %}

@@ -159,5 +159,9 @@ def contact_us(request):
     return redirect(request.META['HTTP_REFERER']+'#footerCtf')
 
 
-def product_details(request):
-    return render(request, 'ecom/product_details.html')
+def product_details(request, id):
+    product = Product.objects.get(id=id)
+    context = {
+        "product":product,
+    }
+    return render(request, 'ecom/product_details.html', context)

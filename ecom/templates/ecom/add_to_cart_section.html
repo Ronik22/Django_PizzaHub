@@ -4,7 +4,7 @@
     {% if user.is_authenticated %}
         
         {% if product in in_cart %}
-            <a id="atc" type="submit" name="product_id" value="{{product.id}}" ><i onclick="toggleCart(this)" class="fas fa-vote-yea"></i></a>
+            <a id="atc" type="submit" name="product_id" value="{{product.id}}" ><i onclick="toggleCart(this)" class="fas fa-check-circle"></i></a>
         {% else %}
             <a id="atc" type="submit" name="product_id" value="{{product.id}}" ><i onclick="toggleCart(this)" class="fas fa-cart-plus"></i></a>
         {% endif %}

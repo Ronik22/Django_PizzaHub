@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block title %}
-    Pizza-Hub | About
+    Pizza-Hub | {{product.item}}
 {% endblock %}
 
 {% block fbgnav %}
@@ -58,7 +58,7 @@
           border: 2px solid #ff0000;
           display: inline-block;
           color: #ff0000;
-          border-radius: 3px;
+          border-radius: 1px;
           text-transform: uppercase
       }
 
@@ -101,16 +101,16 @@
                   </div>
                   <div class="col-md-6">
                       <div class="product p-4">
-                          <div class="float-right">
-                              <i class="fa fa-shopping-cart text-muted"></i>
-                          </div>
-                          <div class="mt-4 mb-3"> <span class="text-uppercase text-muted brand">Orianz</span>
-                              <p class="h5 text-uppercase"><b>Men's slim fit t-shirt</b></p>
-                              <div class="price d-flex flex-row align-items-center"> <span class="act-price">$20</span>
-                                  <!-- <div class="ml-2"> <small class="dis-price">$59</small> <span>40% OFF</span> </div> -->
+                        <div class="float-right d-inline">
+                            <i class="fa fa-heart text-muted f-heart"></i>
+                        </div>
+                          <div class="mt-4 mb-3"> <span class="text-uppercase text-muted brand">{{product.category}} | {{product.brand}}</span><br><br>
+                              <p class="h5 text-uppercase"><b>{{product.item}}</b></p>
+                              <div class="price d-flex flex-row align-items-center"> <span class="act-price">₹ {{product.price}}</span>
+                                  <!-- <div class="ml-2"> <small class="dis-price">{{product.price}}</small> <span>{{product.discount}}% OFF</span> </div> -->
                               </div>
                           </div>
-                          <p class="about">Shop from a wide range of t-shirt from orianz. Pefect for your everyday use, you could pair it with a stylish pair of jeans or trousers complete the look.</p>
+                          <p class="about">{{product.description}}</p>
                           <div class="sizes mt-5">
                               <h6 class="text-uppercase">Size</h6> 
                               <label class="radio"> 
@@ -125,15 +125,10 @@
                                 <input type="radio" name="size" value="L"> 
                                 <span>L</span> 
                               </label> 
-                              <label class="radio"> 
-                                <input type="radio" name="size" value="XL"> 
-                                <span>XL</span> 
-                              </label> <label class="radio"> 
-                                <input type="radio" name="size" value="XXL"> 
-                                <span>XXL</span> 
-                              </label>
                           </div>
-                          <div class="cart mt-4 align-items-center"> <button class="btn btn-danger text-uppercase mr-2 px-4">Add to cart</button> <i class="fa fa-heart text-muted"></i> <i class="fa fa-share-alt text-muted"></i> </div>
+                          <div class="cart mt-4 align-items-center"> 
+                              <button class="btn btn-danger text-uppercase mr-2 px-4"><i class="fa fa-shopping-cart"></i> Add to cart</button>
+                        </div>
                       </div>
                   </div>
               </div>
