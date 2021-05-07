@@ -34,7 +34,10 @@ def add_to_cart(request):
         get_object_or_404(Entry, product=product, cart=cart).delete()
 
     else:
-        Entry.objects.create(product=product, cart=cart, quantity=1)
+        if 'opt_param' in request.POST:
+            Entry.objects.create(product=product, cart=cart, quantity=1, optional_parameter=str(request.POST['opt_param']))
+        else:
+            Entry.objects.create(product=product, cart=cart, quantity=1)
 
     context = {
         "success": True,

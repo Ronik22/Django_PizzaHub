@@ -161,7 +161,20 @@ def contact_us(request):
 
 def product_details(request, id):
     product = Product.objects.get(id=id)
+    if request.user.is_authenticated:
+        in_cart = []
+        already_liked = []
+        cart = get_object_or_404(Cart, user=request.user).cart_entry.all()
+
+        cartp = cart.filter(product=product)
+        if cartp:
+            in_cart.append(product)
+        if product.likes.filter(id=request.user.id).exists():
+            already_liked.append(product)
+
     context = {
         "product":product,
+        "already_liked":already_liked,
+        "in_cart":in_cart,
     }
     return render(request, 'ecom/product_details.html', context)

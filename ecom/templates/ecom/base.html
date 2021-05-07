@@ -26,7 +26,7 @@
 
     <!-- NAVBAR -->
     <nav class="mynavbar {% block fbgnav %}{% endblock %}">
-        <div style="font-family: 'Pacifico', cursive;" class="nav-logo">Pizza-Hub</div>
+        <div style="font-family: 'Pacifico', cursive;" class="nav-logo"><a style="text-decoration: none; color:rgb(255, 74, 42)" href="{% url 'home' %}">Pizza-Hub</a></div>
         <div class="searchtoggle">
             <i onclick="openSearch()" class="fas fa-search"></i>
         </div>
@@ -51,6 +51,8 @@
             <div class="ntlines"></div>
         </div>
     </nav>
+
+    <a href="#" id="scroll" style="display: none;"><span></span></a>
 
     <!-- SEARCHBAR -->
     <div id="myOverlay" class="overlay">
@@ -83,7 +85,7 @@
         {% if messages %}
             <div class="msgmessages">
                 {% for message in messages %}
-                    <div class="alertmsg {% if message.tags %} {{ message.tags }} {% endif %} ">
+                    <div class="alertmsg {% if message.tags %} alertmsg-{{ message.tags }} {% else %} alertmsg-def {% endif %} ">
                         <span class="closebtnmsg">&times;</span>  
                         {{ message }}
                     </div>
@@ -129,6 +131,9 @@
                     <input type="submit" value="Submit">
                 </form>
             </div>
+        </div>
+        <div class="footer-extension">
+            <span style="color: rgb(255, 106, 106);">Pizza-Hub</span>  &copy; 2021 All rights reserved.
         </div>
     </footer>
 

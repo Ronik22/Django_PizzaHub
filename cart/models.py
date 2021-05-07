@@ -22,6 +22,7 @@ class Cart(models.Model):
 """ Entry """
 class Entry(models.Model):
     product = models.ForeignKey(Product, null=True, on_delete=models.CASCADE, related_name="product_entry")
+    optional_parameter = models.CharField(max_length=5000, blank=True)
     cart = models.ForeignKey(Cart, null=True, on_delete=models.CASCADE, related_name="cart_entry")
     quantity = models.PositiveIntegerField()
 

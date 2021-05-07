@@ -85,6 +85,18 @@
       .cart i {
           margin-right: 10px
       }
+
+      #atc{
+        font-size: 16px;
+        display: inline;
+        float: left;
+      }
+
+      .fixlayout{
+          display: flex;
+          flex-direction: row;
+      }
+
     </style>
 
 {% endblock %}
@@ -102,7 +114,10 @@
                   <div class="col-md-6">
                       <div class="product p-4">
                         <div class="float-right d-inline">
-                            <i class="fa fa-heart text-muted f-heart"></i>
+                            <div id="like-section-{{ product.pk }}">
+                                {% include 'ecom/like_section.html' %}
+                            </div>
+                            <!-- <i class="fa fa-heart text-muted f-heart"></i> -->
                         </div>
                           <div class="mt-4 mb-3"> <span class="text-uppercase text-muted brand">{{product.category}} | {{product.brand}}</span><br><br>
                               <p class="h5 text-uppercase"><b>{{product.item}}</b></p>
@@ -113,21 +128,41 @@
                           <p class="about">{{product.description}}</p>
                           <div class="sizes mt-5">
                               <h6 class="text-uppercase">Size</h6> 
+
                               <label class="radio"> 
-                                <input type="radio" name="size" value="S" checked> 
+                                <input type="radio" name="size" value="Small" checked> 
                                 <span>S</span> 
                               </label> 
                               <label class="radio"> 
-                                <input type="radio" name="size" value="M"> 
+                                <input type="radio" name="size" value="Medium"> 
                                 <span>M</span> 
                               </label> 
                               <label class="radio"> 
-                                <input type="radio" name="size" value="L"> 
+                                <input type="radio" name="size" value="Large"> 
                                 <span>L</span> 
                               </label> 
+                              
                           </div>
                           <div class="cart mt-4 align-items-center"> 
-                              <button class="btn btn-danger text-uppercase mr-2 px-4"><i class="fa fa-shopping-cart"></i> Add to cart</button>
+                                
+                                <button class="btn btn-danger text-uppercase mr-2 px-4">
+                                    <form action="{% url 'add-to-cart' %}" method="POST">
+                                        {% csrf_token %}
+                                    
+                                        {% if user.is_authenticated %}
+                                            
+                                            {% if product in in_cart %}
+                                                <a onclick="toggleCart(this)" id="atc" type="submit" name="product_id" value="{{product.id}}" ><i class="fas fa-check-circle"></i> <span>REMOVE FROM CART</span></a>
+                                            {% else %}
+                                                <a onclick="toggleCart(this)" id="atc" type="submit" name="product_id" value="{{product.id}}" ><i class="fas fa-cart-plus"></i> <span>ADD TO CART</span></a>
+                                            {% endif %}
+                                    
+                                        {% else %}
+                                            <i class="fas fa-cart-plus"></i>
+                                        {% endif %}
+                                    </form>
+
+                                </button>
                         </div>
                       </div>
                   </div>
@@ -136,5 +171,88 @@
       </div>
   </div>
 </div>
+
+{% endblock %}
+
+{% block scripts %}
+
+    <script type="text/javascript">
+
+        function toggleLike(x){
+            if(x.classList.contains('far'))
+            {
+                x.classList.remove('far')
+                x.classList.add('fas')
+            }
+            else
+            {
+                x.classList.remove('fas')
+                x.classList.add('far')
+            } 
+        }
+
+        function toggleCart(y){
+            x = y.getElementsByTagName("i")[0]
+            z = y.getElementsByTagName("span")[0]
+            if(x.classList.contains('fa-check-circle'))
+            {
+                x.classList.remove('fa-check-circle')
+                x.classList.add('fa-cart-plus')
+                z.innerText = "ADD TO CART"
+            }
+            else
+            {
+                x.classList.remove('fa-cart-plus')
+                x.classList.add('fa-check-circle')
+                z.innerText = "REMOVE FROM CART"
+            } 
+        }
+
+        $(document).ready(function(event){
+        
+            // LIKE POSTS
+
+            $(document).on('click','#like',function(event){
+                event.preventDefault();
+                var pk = $(this).attr('value');
+                $.ajax({
+                type: 'POST',
+                url: '{% url "product-like" %}',
+                data: {'id':pk, 'csrfmiddlewaretoken':'{{ csrf_token }}'},
+                dataType: 'json',
+                success: function(response){
+
+                },
+                error: function(rs, e){
+                    console.log(rs.responseText);
+                },
+                });
+            });
+
+            //  ADD TO CART
+
+            $(document).on('click','#atc',function(event){
+                event.preventDefault();
+                var pk = $(this).attr('value');
+                var opt_param = document.querySelector('input[name="size"]:checked').value;
+                console.log(opt_param);
+
+                $.ajax({
+                type: 'POST',
+                url: '{% url "add-to-cart" %}',
+                data: {'id':pk, 'csrfmiddlewaretoken':'{{ csrf_token }}', 'opt_param':opt_param},
+                dataType: 'json',
+                success: function(response){
+                    console.log("Item added to cart");
+                },
+                error: function(rs, e){
+                    console.log(rs.responseText);
+                },
+                });
+            });
+
+
+        });
+    </script>
 
 {% endblock %}

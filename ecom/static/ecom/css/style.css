@@ -13,6 +13,43 @@ body{
 }
 
 
+/* SCROLL TO TOP */
+
+#scroll {
+  position:fixed;
+  right:20px;
+  bottom:20px;
+  cursor:pointer;
+  width:50px;
+  height:50px;
+  background-color:#ffbf10;
+  box-shadow: 0px 0px 2px 0.4px #ffbf10;
+  text-indent:-9999px;
+  display:none;
+  -webkit-border-radius:60px;
+  -moz-border-radius:60px;
+  border-radius:60px;
+  z-index: 3;
+}
+#scroll span {
+  position:absolute;
+  top:50%;
+  left:50%;
+  margin-left:-8px;
+  margin-top:-12px;
+  height:0;
+  width:0;
+  border:8px solid transparent;
+  border-bottom-color:#000000;
+}
+#scroll:hover {
+  background-color:#ffffff;
+  box-shadow: 0px 0px 2px 0.4px #3b3b3b;
+  opacity:1;filter:"alpha(opacity=100)";
+  -ms-filter:"alpha(opacity=100)";
+}
+
+
 /* FLASH MESSAGES */
 
 .msgmessages{
@@ -23,17 +60,31 @@ body{
 
 .alertmsg {
   padding: 20px;
-  background-color: #2196F3;
-  color: white;
   opacity: 1;
   transition: opacity 0.6s;
   margin-bottom: 15px;
 }
 
-.alertmsg.success {background-color: #04AA6D;}
-.alertmsg.info {background-color: #2196F3;}
-.alertmsg.warning {background-color: #ff9800;}
-.alertmsg.danger {background-color: #ff1100;}
+.altmsg-def{
+  background-color: #2196F3;
+  color: white;
+}
+.alertmsg-success {
+  background-color: #04AA6D;
+  color: white;
+}
+.alertmsg-info {
+  background-color: #2196F3;
+  color: white;
+}
+.alertmsg-warning {
+  background-color: #ff9800;
+  color: white;
+}
+.alertmsg-danger {
+  background-color: #ff1100;
+  color: white;
+}
 
 .closebtnmsg {
   margin-left: 15px;
@@ -781,6 +832,7 @@ body{
   background-color: #26272b;
   box-shadow: 0px 0px 4px 0px rgb(209, 209, 209);
   margin-top: 40vh;
+  padding-bottom: 30px;
 }
 
 .cfttab1 {
@@ -832,6 +884,14 @@ body{
 
 #ftrsocial i:hover {
   color: #FD0100;
+}
+
+.footer-extension{
+  border-top: 1px solid rgb(87, 87, 87);
+  background-color: #26272b;
+  text-align: center;
+  color: rgb(255, 255, 255);
+  padding: 20px 10px 20px 10px;
 }
 
 @media only screen and (max-width: 800px) {
