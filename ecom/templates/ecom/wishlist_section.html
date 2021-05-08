@@ -14,7 +14,10 @@
                 </div>
             </div>
             <div class="container">
-                <h4><b>{{product.item}}</b></h4> 
+                <h4>
+                    <b>{{product.item}}</b>
+                    <a style="margin-left: 10px;" href="{% url 'product-details' product.id %}"><i class="fas fa-external-link-alt "></i></a>
+                </h4> 
                 <p style="opacity: 0.5; margin-bottom: 24px;">{{product.description}}</p>
                 <div>
                     <form action="{% url 'wishlist-remove' %}" method="POST">

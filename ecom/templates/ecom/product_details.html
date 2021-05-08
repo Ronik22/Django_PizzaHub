@@ -119,31 +119,70 @@
                             </div>
                             <!-- <i class="fa fa-heart text-muted f-heart"></i> -->
                         </div>
-                          <div class="mt-4 mb-3"> <span class="text-uppercase text-muted brand">{{product.category}} | {{product.brand}}</span><br><br>
+                            <div class="mt-4 mb-3"> <span class="text-uppercase text-muted brand">{{product.category}} | {{product.brand}}</span><br><br>
                               <p class="h5 text-uppercase"><b>{{product.item}}</b></p>
                               <div class="price d-flex flex-row align-items-center"> <span class="act-price">₹ {{product.price}}</span>
                                   <!-- <div class="ml-2"> <small class="dis-price">{{product.price}}</small> <span>{{product.discount}}% OFF</span> </div> -->
                               </div>
-                          </div>
-                          <p class="about">{{product.description}}</p>
-                          <div class="sizes mt-5">
-                              <h6 class="text-uppercase">Size</h6> 
-
-                              <label class="radio"> 
-                                <input type="radio" name="size" value="Small" checked> 
-                                <span>S</span> 
-                              </label> 
-                              <label class="radio"> 
-                                <input type="radio" name="size" value="Medium"> 
-                                <span>M</span> 
-                              </label> 
-                              <label class="radio"> 
-                                <input type="radio" name="size" value="Large"> 
-                                <span>L</span> 
-                              </label> 
+                            </div>
+                            <p class="about">{{product.description}}</p>
+                            <div class="sizes mt-5">
+                                {% if product.category.title == "Pizzas" %}
+                                    <h6 class="text-uppercase">Size</h6> 
+                                    <label class="radio"> 
+                                        <input type="radio" name="size" value="Regular" checked> 
+                                        <span title="Regular">R</span> 
+                                    </label> 
+                                    <label class="radio"> 
+                                        <input type="radio" name="size" value="Medium"> 
+                                        <span title="Medium">M</span> 
+                                    </label> 
+                                    <label class="radio"> 
+                                        <input type="radio" name="size" value="Large"> 
+                                        <span title="Large">L</span> 
+                                    </label> 
+                                    <!-- CRUST -->
+                                    <h6 class="text-uppercase">Crust</h6> 
+                                    <label class="radio"> 
+                                        <input type="radio" name="crust" value="New Hand Tossed" checked> 
+                                        <span title="New Hand Tossed">New Hand Tossed</span> 
+                                    </label> 
+                                    <label class="radio"> 
+                                        <input type="radio" name="crust" value="Cheese Burst"> 
+                                        <span title="Cheese Burst">Cheese Burst</span> 
+                                    </label> 
+                                    <label class="radio"> 
+                                        <input type="radio" name="crust" value="Fresh Pan Pizza"> 
+                                        <span title="Fresh Pan Pizza">Fresh Pan Pizza</span> 
+                                    </label> 
+                                {% elif product.category.title == "Burgers" %}
+                                    <h6 class="text-uppercase">Size</h6> 
+                                    <label class="radio"> 
+                                        <input type="radio" name="size" value="Regular" checked> 
+                                        <span title="Regular">S</span> 
+                                    </label> 
+                                    <label class="radio"> 
+                                        <input type="radio" name="size" value="Medium"> 
+                                        <span title="Medium">M</span> 
+                                    </label> 
+                                {% elif product.category.title == "Beverages" %}
+                                    <h6 class="text-uppercase">Size</h6> 
+                                    <label class="radio"> 
+                                        <input type="radio" name="size" value="350ml" checked> 
+                                        <span title="350ml">350ml</span> 
+                                    </label> 
+                                    <label class="radio"> 
+                                        <input type="radio" name="size" value="500ml"> 
+                                        <span title="500ml">500ml</span> 
+                                    </label> 
+                                    <label class="radio"> 
+                                        <input type="radio" name="size" value="1000ml"> 
+                                        <span title="1000ml">1000ml</span> 
+                                    </label> 
+                                {% endif %}
                               
-                          </div>
-                          <div class="cart mt-4 align-items-center"> 
+                            </div>
+                            <div class="cart mt-4 align-items-center"> 
                                 
                                 <button class="btn btn-danger text-uppercase mr-2 px-4">
                                     <form action="{% url 'add-to-cart' %}" method="POST">
@@ -163,8 +202,8 @@
                                     </form>
 
                                 </button>
+                            </div>
                         </div>
-                      </div>
                   </div>
               </div>
           </div>
@@ -234,7 +273,13 @@
             $(document).on('click','#atc',function(event){
                 event.preventDefault();
                 var pk = $(this).attr('value');
-                var opt_param = document.querySelector('input[name="size"]:checked').value;
+                if ('{{product.category.title}}' === "Pizzas"){
+                    var opt_param = document.querySelector('input[name="size"]:checked').value + ',' + document.querySelector('input[name="crust"]:checked').value;
+                }
+                else{
+                    var opt_param = document.querySelector('input[name="size"]:checked').value;
+                }
+                
                 console.log(opt_param);
 
                 $.ajax({

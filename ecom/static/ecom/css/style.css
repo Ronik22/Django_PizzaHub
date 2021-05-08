@@ -65,7 +65,7 @@ body{
   margin-bottom: 15px;
 }
 
-.altmsg-def{
+.alertmsg-def{
   background-color: #2196F3;
   color: white;
 }
@@ -81,7 +81,7 @@ body{
   background-color: #ff9800;
   color: white;
 }
-.alertmsg-danger {
+.alertmsg-error {
   background-color: #ff1100;
   color: white;
 }
