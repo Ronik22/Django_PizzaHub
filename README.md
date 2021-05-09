@@ -10,6 +10,7 @@ A Pizza ordering web-application with Django.
 <li>Food items and Categories </li>
 <li>Wishlist and Cart</li>
 <li>Order summary and Repeat orders</li>
+<li>Get Receipt after purchase</li>
 <li>Content management with Django Admin</li>
 <li>Payment gateway integration using Razorpay</li>
 
