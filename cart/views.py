@@ -278,5 +278,21 @@ def generate_receipt(request, id):
     
     
 # test function for test page to check layout 
+@login_required
 def testpage(request):
-    return render(request, 'cart/testpage.html', {'orderid':'12345'})
+    return render(request, 'cart/testpage.html', {'orderid':'ORD2PHID11'})
+
+
+@login_required
+def order_rating(request):
+    user = request.user
+    order = Order.objects.get(user=user, order_id=request.POST.get('id'))
+    rating = request.POST.get('rating')
+    order.rating = rating
+    order.save()
+
+    context = {
+        "success": True
+    }
+    if request.is_ajax():
+        return JsonResponse(context)

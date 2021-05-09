@@ -43,13 +43,17 @@
     <p class="mt-3"><em>Thank you for choosing us. <a target="_blank" href="{% url 'receipt' orderid %}">Show Receipt &nbsp;&nbsp;<i class="fas fa-external-link-alt "></i></a></em></p>
     <br>
     <p class="h5">Rate your order</p>
-    <div class="starrating risingstar d-flex justify-content-end flex-row-reverse">
-        <input type="radio" id="star5" name="rating" value="5" /><label for="star5" title="5 star"></label>
-        <input type="radio" id="star4" name="rating" value="4" /><label for="star4" title="4 star"></label>
-        <input type="radio" id="star3" name="rating" value="3" /><label for="star3" title="3 star"></label>
-        <input type="radio" id="star2" name="rating" value="2" /><label for="star2" title="2 star"></label>
-        <input type="radio" id="star1" name="rating" value="1" /><label for="star1" title="1 star"></label>
-    </div>	
+    <form id="order-rating" method="post">{% csrf_token %}
+        <div class="starrating risingstar d-flex justify-content-end flex-row-reverse">
+            <input type="radio" id="star5" name="rating" value="5" /><label for="star5" title="5 star"></label>
+            <input type="radio" id="star4" name="rating" value="4" /><label for="star4" title="4 star"></label>
+            <input type="radio" id="star3" name="rating" value="3" /><label for="star3" title="3 star"></label>
+            <input type="radio" id="star2" name="rating" value="2" /><label for="star2" title="2 star"></label>
+            <input type="radio" id="star1" name="rating" value="1" /><label for="star1" title="1 star"></label>
+            <input id="ordersubmit" hidden type="submit">
+        </div>
+    </form>
+    	
     <br>
     <p><a class="btn btn-primary" href="{% url 'menu' %}">Continue shopping</a></p>
 </div>
@@ -58,6 +62,7 @@
 {% block scripts %}
 <script>
     $(document).ready(function(){
+
         $(".rating input:radio").attr("checked", false);
 
         $('.rating input').click(function () {
@@ -65,11 +70,33 @@
             $(this).parent().addClass('checked');
         });
 
+
+        $(document).on('submit','#order-rating',function(event){
+            event.preventDefault();
+            var pk = '{{orderid}}';
+            var rt = document.querySelector('input[name="rating"]:checked').value;
+            $.ajax({
+            type: 'POST',
+            url: '{% url "order-rating" %}',
+            data: {'id':pk, 'rating':rt, 'csrfmiddlewaretoken':'{{ csrf_token }}'},
+            dataType: 'json',
+            success: function(response){
+                console.log(pk);
+                console.log(rt);
+            },
+            error: function(rs, e){
+                console.log(rs.responseText);
+            },
+            });
+        });
+
         $('input:radio').change(
         function(){
             var userRating = this.value;
-            alert(userRating);
+            document.getElementById('ordersubmit').click()
+            alert("Thank you for choosing us");
         }); 
+
     });
 </script>
 {% endblock %}

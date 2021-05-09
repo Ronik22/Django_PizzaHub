@@ -35,7 +35,7 @@
                     <tr>
                         <td class="shpimg">
                             <img src="{% static 'ecom/images/karthik-garikapati-oBbTc1VoT-0-unsplash.jpg' %}" alt="">
-                            <div>{{item.product.item}}</div>
+                            <div><a href="{% url 'product-details' item.product.id %}">{{item.product.item}}</a></div>
                             &nbsp;&nbsp;&nbsp;&nbsp;
 
                             <form action="{% url 'remove-from-cart' item.product.id %}" method="POST">

@@ -54,6 +54,7 @@ class Order(models.Model):
     phone = models.CharField(max_length=100)
     amount = models.DecimalField(default=0.00, max_digits=15, decimal_places=2)
     datetime_of_payment = models.DateTimeField(default=timezone.now)
+    rating = models.CharField(max_length=20, blank=True)
     razorpayid = models.CharField(max_length=255,default="")
     razorpaypaymentid = models.CharField(max_length=255,default="")
     razorpaysignature = models.CharField(max_length=255, default="")
