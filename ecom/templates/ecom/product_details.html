@@ -109,7 +109,12 @@
           <div class="bscard">
               <div class="row">
                   <div class="col-md-6  d-flex justify-content-center align-items-center">
+                    {% if product.image %}
+                    <img class="img-fluid" style="height: 100%; width: auto;" src="{{product.image.url}}" />
+                    {% else %}
                     <img class="img-fluid" style="height: 100%; width: auto;" src="{% static 'ecom/images/karthik-garikapati-oBbTc1VoT-0-unsplash.jpg' %}" />
+                    {% endif %}
+                    
                   </div>
                   <div class="col-md-6">
                       <div class="product p-4">

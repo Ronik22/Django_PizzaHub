@@ -276,12 +276,6 @@ def generate_receipt(request, id):
     else:
         return HttpResponse("403 Forbidden")
     
-    
-# test function for test page to check layout 
-@login_required
-def testpage(request):
-    return render(request, 'cart/testpage.html', {'orderid':'ORD2PHID11'})
-
 
 @login_required
 def order_rating(request):

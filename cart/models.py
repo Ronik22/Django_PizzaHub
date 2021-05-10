@@ -54,6 +54,7 @@ class Order(models.Model):
     phone = models.CharField(max_length=100)
     amount = models.DecimalField(default=0.00, max_digits=15, decimal_places=2)
     datetime_of_payment = models.DateTimeField(default=timezone.now)
+    delivery_charges = models.DecimalField(default=25.00, max_digits=15, decimal_places=2)
     rating = models.CharField(max_length=20, blank=True)
     razorpayid = models.CharField(max_length=255,default="")
     razorpaypaymentid = models.CharField(max_length=255,default="")
@@ -64,9 +65,9 @@ class Order(models.Model):
 
 
 # Need to be fixed  
-@receiver(post_save, sender=Entry)
-def update_cart(sender, instance, **kwargs):
-    line_cost = instance.quantity * instance.product.price
-    instance.cart.total += line_cost
-    instance.cart.count += instance.quantity
-    instance.cart.save()
+# @receiver(post_save, sender=Entry)
+# def update_cart(sender, instance, **kwargs):
+#     line_cost = instance.quantity * instance.product.price
+#     instance.cart.total += line_cost
+#     instance.cart.count += instance.quantity
+#     instance.cart.save()

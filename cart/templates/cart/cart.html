@@ -34,7 +34,12 @@
                 {% for item in products %}
                     <tr>
                         <td class="shpimg">
-                            <img src="{% static 'ecom/images/karthik-garikapati-oBbTc1VoT-0-unsplash.jpg' %}" alt="">
+                            {% if item.product.image %}
+                            <img src="{{item.product.image.url}}" alt="Avatar">
+                            {% else %}
+                            <img src="{% static 'ecom/images/karthik-garikapati-oBbTc1VoT-0-unsplash.jpg' %}" alt="Avatar">
+                            {% endif %}
+
                             <div><a href="{% url 'product-details' item.product.id %}">{{item.product.item}}</a></div>
                             &nbsp;&nbsp;&nbsp;&nbsp;
 

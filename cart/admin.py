@@ -11,15 +11,11 @@ class EntryInline(admin.TabularInline):
 
 @admin.register(Cart)
 class CartAdmin(admin.ModelAdmin):
-    list_display = ("user", "count", "total")
+    list_display = ("user",)
     fieldsets = (
         (None, {
             'fields': ('user', 'count', 'total')
         }),
-        # ('Advanced options', {
-        #     'classes': ('collapse',),
-        #     'fields': ('EntryInline',),
-        # }),
     )
 
     inlines = [

@@ -23,7 +23,11 @@
 
         {% for product in res %}
             <div class="card">
+                {% if product.image %}
+                <img src="{{product.image.url}}" alt="Avatar" style="width:100%">
+                {% else %}
                 <img src="{% static 'ecom/images/karthik-garikapati-oBbTc1VoT-0-unsplash.jpg' %}" alt="Avatar" style="width:100%">
+                {% endif %}
                 <div class="middle">
                     <div id="cart-section-{{ product.pk }}" class="text">
                         {% include 'ecom/add_to_cart_section.html' %}

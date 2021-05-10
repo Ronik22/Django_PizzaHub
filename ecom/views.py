@@ -8,7 +8,7 @@ from django.http import JsonResponse
 # Create your views here.
 
 def home(request):
-    products = Product.objects.all()
+    products = Product.objects.all().order_by('-rating')[:3]
     context = {
         "products": products
     }

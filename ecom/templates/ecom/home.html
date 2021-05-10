@@ -36,7 +36,13 @@
         <div class="second-part">
             {% for product in products %}
             <div class="card">
+
+                {% if product.image %}
+                <img src="{{product.image.url}}" alt="Avatar" style="width:100%">
+                {% else %}
                 <img src="{% static 'ecom/images/karthik-garikapati-oBbTc1VoT-0-unsplash.jpg' %}" alt="Avatar" style="width:100%">
+                {% endif %}
+                
                 <div class="middle">
                     <div class="text"><a href="{% url 'product-details' product.id %}"><i class="fas fa-external-link-alt"></i></a></div>
                 </div>
@@ -86,7 +92,7 @@
                 </div>
             </div>
             <div class="t-right-part">
-                <img src="{% static 'ecom/images/exp/ep1.png' %}" alt="pizza">
+                <img src="{% static 'ecom/images/ep1.png' %}" alt="pizza">
             </div>
         </div>
 
