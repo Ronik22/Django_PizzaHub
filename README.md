@@ -1,6 +1,6 @@
 # Pizza-Hub | ECommerce
 
-A Pizza ordering web-application with Django.
+An ECommerce Web App created using Django, lets users order food online. Items are placed under vendor-defined categories.
 
 </br>
 
@@ -9,7 +9,7 @@ A Pizza ordering web-application with Django.
 <li>Sign Up, Login, Logout, Forgot Password</li>
 <li>Food items and Categories </li>
 <li>Wishlist and Cart</li>
-<li>Order summary and Repeat orders</li>
+<li>Order summary, Repeat orders and Order rating</li>
 <li>Get Receipt after purchase</li>
 <li>Content management with Django Admin</li>
 <li>Payment gateway integration using Razorpay</li>
