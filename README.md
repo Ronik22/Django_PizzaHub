@@ -16,7 +16,7 @@ An ECommerce Web App created using Django, lets users order food online. Items a
 
 <br>
 
-**Note :** Customization options for product items should be added in `Singleline JSON text` in Django Admin.
+**Note :** Customization options (optional) for product items should be added in `Singleline JSON text` in Django Admin.
 
 Example : `{ "size":[ "Regular", "Medium", "Large" ], "crust":[ "cheese burst", "classic hand tossed", "thin crust" ] }`
 
