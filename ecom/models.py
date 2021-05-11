@@ -6,6 +6,7 @@ from django.contrib.auth.models import User
 """ Product """
 class Product(models.Model):
     item = models.CharField(max_length=140)
+    options = models.CharField(max_length=1000, blank=True)     # passed as nested tuples like (('size',('S','M','L')), ('crust',('cheese burst','thin crust','classic hand tossed')))
     image = models.ImageField(default='default.jpg', upload_to='product_images',blank=True, null=True)
     price = models.DecimalField(max_digits=20, decimal_places=2)
     discount = models.DecimalField(null=True, blank=True, max_digits=5, decimal_places=2)

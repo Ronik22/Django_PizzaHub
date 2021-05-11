@@ -132,58 +132,22 @@
                             </div>
                             <p class="about">{{product.description}}</p>
                             <div class="sizes mt-5">
-                                {% if product.category.title == "Pizzas" %}
-                                    <h6 class="text-uppercase">Size</h6> 
-                                    <label class="radio"> 
-                                        <input type="radio" name="size" value="Regular" checked> 
-                                        <span title="Regular">R</span> 
-                                    </label> 
-                                    <label class="radio"> 
-                                        <input type="radio" name="size" value="Medium"> 
-                                        <span title="Medium">M</span> 
-                                    </label> 
-                                    <label class="radio"> 
-                                        <input type="radio" name="size" value="Large"> 
-                                        <span title="Large">L</span> 
-                                    </label> 
-                                    <!-- CRUST -->
-                                    <h6 class="text-uppercase">Crust</h6> 
-                                    <label class="radio"> 
-                                        <input type="radio" name="crust" value="New Hand Tossed" checked> 
-                                        <span title="New Hand Tossed">New Hand Tossed</span> 
-                                    </label> 
-                                    <label class="radio"> 
-                                        <input type="radio" name="crust" value="Cheese Burst"> 
-                                        <span title="Cheese Burst">Cheese Burst</span> 
-                                    </label> 
-                                    <label class="radio"> 
-                                        <input type="radio" name="crust" value="Fresh Pan Pizza"> 
-                                        <span title="Fresh Pan Pizza">Fresh Pan Pizza</span> 
-                                    </label> 
-                                {% elif product.category.title == "Burgers" %}
-                                    <h6 class="text-uppercase">Size</h6> 
-                                    <label class="radio"> 
-                                        <input type="radio" name="size" value="Regular" checked> 
-                                        <span title="Regular">S</span> 
-                                    </label> 
-                                    <label class="radio"> 
-                                        <input type="radio" name="size" value="Medium"> 
-                                        <span title="Medium">M</span> 
-                                    </label> 
-                                {% elif product.category.title == "Beverages" %}
-                                    <h6 class="text-uppercase">Size</h6> 
-                                    <label class="radio"> 
-                                        <input type="radio" name="size" value="350ml" checked> 
-                                        <span title="350ml">350ml</span> 
-                                    </label> 
-                                    <label class="radio"> 
-                                        <input type="radio" name="size" value="500ml"> 
-                                        <span title="500ml">500ml</span> 
-                                    </label> 
-                                    <label class="radio"> 
-                                        <input type="radio" name="size" value="1000ml"> 
-                                        <span title="1000ml">1000ml</span> 
-                                    </label> 
+
+                                <!-- { "size":[ "S", "M", "L" ], "crust":[ "cheese burst", "classic hand tossed", "thin crust" ] } -->
+                                {% if product_opts != None %}
+                                    {% for key,opt in product_opts.items %}
+                                        <h6 class="text-uppercase">{{key}}</h6> 
+                                        {% for subopt in opt %}
+                                            <label class="radio"> 
+                                                {% if subopt == opt.0 %}
+                                                    <input type="radio" name="{{key}}" value="{{subopt}}" checked> 
+                                                {% else %}
+                                                    <input type="radio" name="{{key}}" value="{{subopt}}">
+                                                {% endif %} 
+                                                <span title="{{subopt}}">{{subopt}}</span> 
+                                            </label>
+                                        {% endfor %}
+                                    {% endfor %}
                                 {% endif %}
                               
                             </div>
@@ -278,19 +242,26 @@
             $(document).on('click','#atc',function(event){
                 event.preventDefault();
                 var pk = $(this).attr('value');
-                if ('{{product.category.title}}' === "Pizzas"){
-                    var opt_param = document.querySelector('input[name="size"]:checked').value + ',' + document.querySelector('input[name="crust"]:checked').value;
-                }
-                else{
-                    var opt_param = document.querySelector('input[name="size"]:checked').value;
-                }
+
+                var opt_param = ``;
+                {% if product_opts != None %}
+                    {% for key,opt in product_opts.items %}
+                        opt_param += document.querySelector('input[name="{{key}}"]:checked').value + ', ';
+                    {% endfor %}
+                {% endif %}
                 
                 console.log(opt_param);
 
                 $.ajax({
                 type: 'POST',
                 url: '{% url "add-to-cart" %}',
-                data: {'id':pk, 'csrfmiddlewaretoken':'{{ csrf_token }}', 'opt_param':opt_param},
+
+                {% if product_opts != None %}
+                    data: {'id':pk, 'csrfmiddlewaretoken':'{{ csrf_token }}', 'opt_param':opt_param},
+                {% else %}
+                    data: {'id':pk, 'csrfmiddlewaretoken':'{{ csrf_token }}'},
+                {% endif %}
+                
                 dataType: 'json',
                 success: function(response){
                     console.log("Item added to cart");

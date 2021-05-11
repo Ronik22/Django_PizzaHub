@@ -1,9 +1,11 @@
+from django.http.response import HttpResponse
 from cart.models import Cart
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import Product, Category, Contact
 from django.contrib.auth.decorators import login_required
 from django.template.loader import render_to_string
 from django.http import JsonResponse
+import json
 
 # Create your views here.
 
@@ -171,9 +173,19 @@ def product_details(request, id):
         if product.likes.filter(id=request.user.id).exists():
             already_liked.append(product)
 
+    # { "size":[ "S", "M", "L" ], "crust":[ "cheese burst", "classic hand tossed", "thin crust" ] }
+
+    pdict2 = {}
+    pot = product.options
+    if pot != "":
+        pdict2 = json.loads(pot)
+    else:
+        pdict2 = None
+
     context = {
         "product":product,
         "already_liked":already_liked,
         "in_cart":in_cart,
+        "product_opts":pdict2,
     }
     return render(request, 'ecom/product_details.html', context)
