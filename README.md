@@ -14,6 +14,12 @@ An ECommerce Web App created using Django, lets users order food online. Items a
 <li>Content management with Django Admin</li>
 <li>Payment gateway integration using Razorpay</li>
 
+<br>
+
+**Note :** Customization options (optional) for product items should be added in `Singleline JSON text` in Django Admin.
+
+Example : `{ "size":[ "Regular", "Medium", "Large" ], "crust":[ "cheese burst", "classic hand tossed", "thin crust" ] }`
+
 &nbsp;
 
 ## Demo
