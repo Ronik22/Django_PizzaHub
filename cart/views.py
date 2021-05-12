@@ -65,7 +65,7 @@ def checkout(request):
         # calc price
         final_price = final_price + product.price * int(values)
 
-    final_price = final_price + 25
+    final_price = final_price + cart.delivery_charges
     context = {
         "cuser":request.user.profile,
         "pdict":pdict,
@@ -87,7 +87,7 @@ def reorder(request):
         product = get_object_or_404(Product, id=int(keys))
         final_price = final_price + product.price * int(values)
 
-    final_price = final_price + 25
+    final_price = final_price + cart.delivery_charges
     context = {
         "cuser":request.user.profile,
         "pdict":pdict,

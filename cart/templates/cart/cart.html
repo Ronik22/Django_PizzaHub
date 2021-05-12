@@ -29,6 +29,7 @@
                     <th>Price</th> 
                     <th>Quantity</th>
                     <th>Total</th>
+                    <th>Remove</th>
                 </tr>
                 <tbody id="all_products">
                 {% for item in products %}
@@ -40,13 +41,10 @@
                             <img src="{% static 'ecom/images/karthik-garikapati-oBbTc1VoT-0-unsplash.jpg' %}" alt="Avatar">
                             {% endif %}
 
-                            <div><a href="{% url 'product-details' item.product.id %}">{{item.product.item}}</a></div>
-                            &nbsp;&nbsp;&nbsp;&nbsp;
-
-                            <form action="{% url 'remove-from-cart' item.product.id %}" method="POST">
-                                {% csrf_token %}
-                                <button title="Remove from Cart" style="border: 0; background-color: transparent; cursor: pointer;" type="submit" name="product_id" ><i class="fas fa-trash-alt f-heart"></i></button>
-                            </form>
+                            <div>
+                                {{item.product.item}}
+                                <a style="margin-left: 10px;" href="{% url 'product-details' item.product.id %}"><i class="fas fa-external-link-alt "></i></a>
+                            </div>
                             
                             <div class="pid" hidden>{{item.product.id}}</div>
                         </td>
@@ -55,6 +53,12 @@
                             <input id="cartitemno" class="tdinp" type="number" value="{{item.quantity}}" min="1" max="10">
                         </td>
                         <td>{{item.product.price}}</td>
+                        <td>
+                            <form action="{% url 'remove-from-cart' item.product.id %}" method="POST">
+                                {% csrf_token %}
+                                <button title="Remove from Cart" style="border: 0; background-color: transparent; cursor: pointer;" type="submit" name="product_id" ><i class="fas fa-trash-alt f-heart"></i></button>
+                            </form>
+                        </td>
                     </tr>
                 {% endfor %}
                 </tbody>
@@ -66,6 +70,7 @@
                     <td></td>
                     <td id="total_quantity">0</td>
                     <td id="total_display">₹0</td>
+                    <td></td>
                 </tr>
             </table>
         </div>
@@ -73,10 +78,10 @@
         <div class="shpcheckout">
             <h3>Order Summary:</h3>
             <hr style="margin: 20px 0px 30px 0px;">
-            <span>&nbsp&#9745 Item Subtotal: ₹<span id="total_display2">0</span></span>
+            <span>&nbsp ✅ Item Subtotal: ₹<span id="total_display2">0</span></span>
             <!-- <span>&nbsp&#9745 Discount: $49</span> -->
-            <span>&nbsp&#9745 Delivery Charges: ₹<span id="delv_charges">25.0</span></span> 
-            <span>&nbsp&#9745 Amount to be paid: ₹<span id="endtotal_display">0</span></span>
+            <span>&nbsp ✅ Delivery Charges: ₹<span id="delv_charges">{{cart.delivery_charges}}</span></span> 
+            <span>&nbsp ✅ Amount to be paid: ₹<span id="endtotal_display">0</span></span>
             <div>
                 <a href="{% url 'menu' %}">Continue Shopping</a>
                 <a onclick="checkoutp()">Checkout</a>

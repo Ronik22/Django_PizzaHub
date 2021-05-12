@@ -10,8 +10,7 @@ from django.dispatch import receiver
 """ Cart """
 class Cart(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    count = models.PositiveIntegerField(default=0)
-    total = models.DecimalField(default=0.00, max_digits=10, decimal_places=2)
+    delivery_charges = models.DecimalField(default=25.00, max_digits=15, decimal_places=2)
     updated = models.DateTimeField(auto_now=True)
     timestamp = models.DateTimeField(auto_now_add=True)
 
@@ -63,11 +62,3 @@ class Order(models.Model):
     def __str__(self):
         return f"{self.id} - {self.user}"
 
-
-# Need to be fixed  
-# @receiver(post_save, sender=Entry)
-# def update_cart(sender, instance, **kwargs):
-#     line_cost = instance.quantity * instance.product.price
-#     instance.cart.total += line_cost
-#     instance.cart.count += instance.quantity
-#     instance.cart.save()

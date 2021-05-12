@@ -11,10 +11,10 @@ class EntryInline(admin.TabularInline):
 
 @admin.register(Cart)
 class CartAdmin(admin.ModelAdmin):
-    list_display = ("user",)
+    list_display = ("user", "delivery_charges",)
     fieldsets = (
         (None, {
-            'fields': ('user', 'count', 'total')
+            'fields': ('user', 'delivery_charges',)
         }),
     )
 
