@@ -24,6 +24,6 @@ Example : `{ "size":[ "Regular", "Medium", "Large" ], "crust":[ "cheese burst", 
 
 ## Demo
 
-<image src="./demo/demo1.gif" alt="Demo" />
+https://user-images.githubusercontent.com/64803043/118665640-15395b00-b810-11eb-8b17-36027adb6b74.mp4
 
-<a href="./demo/demo1.mkv">Video Link</a>
+<a href="./demo/demo1.mp4">Video Link</a>
