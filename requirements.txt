@@ -15,5 +15,5 @@ razorpay==1.2.0
 requests==2.26.0
 sqlparse==0.4.2
 urllib3==1.26.6
-waitress==2.1.1
+waitress==2.1.2
 whitenoise==5.3.0
